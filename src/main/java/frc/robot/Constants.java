@@ -17,5 +17,5 @@ public class Constants {
         kReal,
         kReplay;
     }
-    public static final Modes state = Modes.kReal;
+    public static final Modes state = Modes.kSim;
 }

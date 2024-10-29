@@ -16,8 +16,8 @@ public class DrivetrainIOSim implements DrivetrainIO {
             KitbotGearing.k8p45,
             KitbotWheelSize.kSixInch,
             null);
+    public static double leftVolts, rightVolts;
 
-    double leftVolts, rightVolts;
 
 
     @Override
@@ -43,5 +43,6 @@ public class DrivetrainIOSim implements DrivetrainIO {
         physicsSim.setInputs(left, right);
         leftVolts = left;
         rightVolts = right;
+        
     }
 }
