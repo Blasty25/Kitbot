@@ -9,15 +9,16 @@ public class RunShooter extends Command {
 
     ShooterSub shooterSub;
     double feederSpeed;
+    double shooterSpeed;
 
-    public RunShooter(ShooterSub shooterSub, double feederSpeed){
+    public RunShooter(ShooterSub shooterSub, double shooterSpeed){
     this.shooterSub = shooterSub;
-    this.feederSpeed = feederSpeed;
+    this.shooterSpeed = shooterSpeed;
     }
 
     @Override
     public void execute(){
-        shooterSub.setShooterOutput(feederSpeed);
+        shooterSub.setShooterOutput(shooterSpeed);
     }
 
     @Override
