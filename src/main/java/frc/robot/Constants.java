@@ -13,10 +13,12 @@ public class Constants {
         public static final int backRight = 4;
         public static final int frontRight = 3;
 
+    }
+
         //Sparks
        public static final int shooterID = 12;
        public static final int feederID = 11; 
-    }
+       
     public enum Modes{
         kSim,
         kReal,

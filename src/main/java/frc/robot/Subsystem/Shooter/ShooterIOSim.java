@@ -14,8 +14,8 @@ public class ShooterIOSim implements ShooterIO {
 
     public ShooterIOSim(){
 
-        ShooterM = new TalonFX(Constants.DriveConstants.shooterID);
-        FeederM = new TalonFX(Constants.DriveConstants.feederID);
+        ShooterM = new TalonFX(Constants.shooterID);
+        FeederM = new TalonFX(Constants.feederID);
 
         ShooterM.setInverted(true);
         FeederM.setInverted(true);
@@ -31,14 +31,12 @@ public class ShooterIOSim implements ShooterIO {
 
     @Override
     public void setFeederVolts(double volts) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setFeederVolts'");
+        FeederM.setControl(FeederV.withOutput(volts));
     }
 
     @Override
     public void setShooterVolts(double volts) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setShooterVolts'");
+        ShooterM.setControl(ShooterV.withOutput(volts));
     }
     
 }

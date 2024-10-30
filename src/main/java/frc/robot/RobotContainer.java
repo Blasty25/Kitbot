@@ -6,10 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.Modes;
 import frc.robot.Subsystem.Drivetrain.DrivetrainIOSim;
+import frc.robot.Subsystem.Drivetrain.DrivetrainIOTalonSRX;
 import frc.robot.Subsystem.Drivetrain.DrivetrainSubsystem;
 import frc.robot.Subsystem.Shooter.ShooterIO;
 import frc.robot.Subsystem.Shooter.ShooterIONeo;
@@ -29,10 +29,10 @@ public class RobotContainer{
   public RobotContainer(){
     if (Constants.state == Modes.kSim) {
       drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOSim());
-      shootersub = new ShooterSub(new ShooterIONeo());
+      shootersub = new ShooterSub(new ShooterIOSim());
     }
     if (Constants.state == Modes.kReal) {
-      drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOSim());
+      drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOTalonSRX());
       shootersub = new ShooterSub(new ShooterIONeo());
     }
     if (Constants.state == Modes.kReplay) {

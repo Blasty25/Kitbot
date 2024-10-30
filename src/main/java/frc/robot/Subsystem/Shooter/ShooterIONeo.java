@@ -15,8 +15,8 @@ public class ShooterIONeo implements ShooterIO{
     CANSparkMax Feeder;
     
     public ShooterIONeo() {
-        Shooter = new CANSparkMax(Constants.DriveConstants.shooterID, MotorType.kBrushless);
-        Feeder = new CANSparkMax(Constants.DriveConstants.feederID, MotorType.kBrushless);
+        Shooter = new CANSparkMax(Constants.shooterID, MotorType.kBrushless);
+        Feeder = new CANSparkMax(Constants.feederID, MotorType.kBrushless);
 
         Shooter.restoreFactoryDefaults();
         Feeder.restoreFactoryDefaults();
