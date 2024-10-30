@@ -5,14 +5,15 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.RobotController;
 
+import frc.robot.Constants;
 
 
 public class DrivetrainIOTalonSRX implements DrivetrainIO{
 
-    TalonSRX backLeft = new TalonSRX(2);
-    TalonSRX backRight = new TalonSRX(4);
-    TalonSRX frontLeft = new TalonSRX(1);
-    TalonSRX frontRight = new TalonSRX(3);
+    TalonSRX backLeft = new TalonSRX(Constants.DriveConstants.backLeft);
+    TalonSRX backRight = new TalonSRX(Constants.DriveConstants.backRight);
+    TalonSRX frontLeft = new TalonSRX(Constants.DriveConstants.frontLeft);
+    TalonSRX frontRight = new TalonSRX(Constants.DriveConstants.frontRight);
 
     public DrivetrainIOTalonSRX(){
 
@@ -36,7 +37,7 @@ public class DrivetrainIOTalonSRX implements DrivetrainIO{
 
 
     @Override
-    public void setVolts(double left, double right) {   //setting the volts from DrivetraionIOSim, however I don't know what ControlMode is. So I don't know what to set it as.
+    public void setVolts(double left, double right) {  
     frontLeft.set(ControlMode.PercentOutput, left / RobotController.getInputVoltage());
     frontRight.set(ControlMode.PercentOutput, right / RobotController.getInputVoltage());
     }

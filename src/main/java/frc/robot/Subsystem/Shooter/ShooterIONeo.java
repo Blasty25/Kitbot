@@ -1,4 +1,4 @@
-package frc.robot.Subsystem.Shooter;
+/*package frc.robot.Subsystem.Shooter;
 
 
 import com.revrobotics.CANSparkMax;
@@ -11,3 +11,4 @@ import frc.robot.Constants;
 public class ShooterIONeo implements ShooterIO {
     
 }
+*/

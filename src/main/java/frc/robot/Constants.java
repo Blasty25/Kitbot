@@ -7,10 +7,15 @@ package frc.robot;
 /** Add your docs here. */
 public class Constants {
     public static class DriveConstants {
-        public static final double leftP = 0;
-        public static final double leftD = 0;
-        public static final double leftI = 0;
-        public static final double leftFF = 0;
+        //talons
+        public static final int backLeft = 2;
+        public static final int frontLeft = 1;
+        public static final int backRight = 4;
+        public static final int frontRight = 3;
+
+        //Sparks
+       public static final int shooterID = 12;
+       public static final int feederID = 11; 
     }
     public enum Modes{
         kSim,

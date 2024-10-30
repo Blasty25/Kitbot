@@ -10,9 +10,11 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.MathUtil;
 
 import java.util.function.DoubleSupplier;
 
@@ -26,9 +28,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public DrivetrainSubsystem(DrivetrainIO motors) {
     io = motors;
-}
+  }
 
-public void setVoltages(double left, double right) {
+  public void setVoltages(double left, double right) {
+
     io.setVolts(left * RobotController.getInputVoltage(), right * RobotController.getInputVoltage());
   }
 
@@ -43,7 +46,7 @@ public void setVoltages(double left, double right) {
         inputs.leftPositionMeters, inputs.rightPositionMeters);
     io.updateInputs(inputs);
     Logger.processInputs("Drivetrain", inputs);
-    Logger.recordOutput("Drivetrain Pose",odometry.getPoseMeters());
+    Logger.recordOutput("Drivetrain Pose", odometry.getPoseMeters());
 
   }
 
@@ -51,10 +54,16 @@ public void setVoltages(double left, double right) {
     return new RunCommand(() -> this.setVoltages(left.getAsDouble(), right.getAsDouble()), this);
   }
 
-  public Command setVoltagesArcadeCommand(DoubleSupplier drive, DoubleSupplier steer) {
+  public Command setVoltagesArcadeCommand(DoubleSupplier driveSupplier, DoubleSupplier steerSupplier) {
     return new RunCommand(() -> {
-      var speeds = DifferentialDrive.arcadeDriveIK(drive.getAsDouble(), steer.getAsDouble(), false);
-      this.setVoltages(speeds.left * 12, speeds.right * 12);
+      double drive = driveSupplier.getAsDouble();
+      double steer = steerSupplier.getAsDouble();
+      drive = MathUtil.applyDeadband(drive, 0.1);
+      steer = MathUtil.applyDeadband(steer, 0.1);
+      double left = drive - steer;
+      double right = drive + steer;
+      this.setVoltages(left, right);
+
     }, this);
   }
 }

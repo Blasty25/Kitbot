@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.Modes;
 import frc.robot.Subsystem.Drivetrain.DrivetrainIOSim;
 import frc.robot.Subsystem.Drivetrain.DrivetrainSubsystem;
-import frc.robot.Subsystem.Shooter.ShooterSub;
+//import frc.robot.Subsystem.Shooter.ShooterSub;
 
 public class RobotContainer {
   // Create a new Xbox controller on port 0
@@ -32,15 +32,14 @@ public class RobotContainer {
 
   private void configureBindings() {
     drivetrainSubsystem.setDefaultCommand(
-        drivetrainSubsystem.setVoltagesCommand(
+        drivetrainSubsystem.setVoltagesArcadeCommand(
             () -> controller.getLeftY(),
-            () -> controller.getRightY()));
-    shootersub.setDefaultCommand(
+            () -> controller.getRightX()));
+    /*shootersub.setDefaultCommand(
       ShooterSub.setVoltagesCommand(
-        controller.leftTrigger().whiletrue(Shootersub.);
+        controller.a().whiletrue(Shootersub.);
         )
-      )
-    );
+      );*/
   }
 
   public Command getAutonomousCommand() {
