@@ -12,7 +12,10 @@ import frc.robot.Constants.Modes;
 import frc.robot.Subsystem.Drivetrain.DrivetrainIOSim;
 import frc.robot.Subsystem.Drivetrain.DrivetrainSubsystem;
 import frc.robot.Subsystem.Shooter.ShooterIO;
+import frc.robot.Subsystem.Shooter.ShooterIONeo;
+import frc.robot.Subsystem.Shooter.ShooterIOSim;
 import frc.robot.Subsystem.Shooter.ShooterSub;
+import frc.robot.Subsystem.Shooter.Commands.RunFeeder;
 import frc.robot.Subsystem.Shooter.Commands.RunShooter;
 
 public class RobotContainer{
@@ -21,32 +24,32 @@ public class RobotContainer{
   DrivetrainSubsystem drivetrainSubsystem;
   ShooterSub shootersub;
   RunShooter runShooter;   //hi
+  RunFeeder runFeeder;
 
-  public RobotContainer(ShooterIO ShooterIO){
+  public RobotContainer(){
     if (Constants.state == Modes.kSim) {
       drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOSim());
-      runShooter = new RunShooter(shootersub, 0);
-      shootersub = new ShooterSub(ShooterIO);
+      shootersub = new ShooterSub(new ShooterIONeo());
     }
     if (Constants.state == Modes.kReal) {
       drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOSim());
-      runShooter = new RunShooter(shootersub, 0);
-      shootersub = new ShooterSub(ShooterIO);
+      shootersub = new ShooterSub(new ShooterIONeo());
     }
     if (Constants.state == Modes.kReplay) {
       drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOSim());
-      runShooter = new RunShooter(shootersub, 0);
-      shootersub = new ShooterSub(ShooterIO);
+      shootersub = new ShooterSub(new ShooterIONeo());
     }
     configureBindings();
   }
+
 
   private void configureBindings() {
     drivetrainSubsystem.setDefaultCommand(
         drivetrainSubsystem.setVoltagesArcadeCommand(
             () -> controller.getLeftY(),
             () -> controller.getRightX()));
-            controller.a().whileTrue(runShooter);
+            controller.a().whileTrue(new RunFeeder(shootersub, 0));
+            controller.leftTrigger(0).whileTrue(new RunShooter(shootersub, 0));
   }
 
   public Command getAutonomousCommand() {
