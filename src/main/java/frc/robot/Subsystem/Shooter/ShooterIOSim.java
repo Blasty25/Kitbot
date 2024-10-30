@@ -1,13 +1,12 @@
 package frc.robot.Subsystem.Shooter;
 
 import com.ctre.phoenix6.controls.VoltageOut;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.ctre.phoenix6.hardware.TalonFX;
 import frc.robot.Constants;
 public class ShooterIOSim implements ShooterIO {
 
-    CANSparkMax ShooterM;
-    CANSparkMax FeederM;
+    TalonFX ShooterM;
+    TalonFX FeederM;
 
 
     VoltageOut ShooterV;
@@ -15,8 +14,8 @@ public class ShooterIOSim implements ShooterIO {
 
     public ShooterIOSim(){
 
-        ShooterM = new CANSparkMax(Constants.DriveConstants.shooterID, MotorType.kBrushless);
-        FeederM = new CANSparkMax(Constants.DriveConstants.feederID, MotorType.kBrushless);
+        ShooterM = new TalonFX(Constants.DriveConstants.shooterID);
+        FeederM = new TalonFX(Constants.DriveConstants.feederID);
 
         ShooterM.setInverted(true);
         FeederM.setInverted(true);
