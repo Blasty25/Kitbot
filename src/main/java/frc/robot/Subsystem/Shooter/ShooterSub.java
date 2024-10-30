@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-/*package frc.robot.Subsystem.Shooter;
+package frc.robot.Subsystem.Shooter;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -25,7 +25,7 @@ import frc.robot.Subsystem.Shooter.ShooterIO.ShooterData;
 public class ShooterSub extends SubsystemBase {
   /** Creates a new ShooterSub. */
 
- /* ShooterIO io;
+ ShooterIO io;
 
   public ShooterSub(ShooterIO shoot) {
     io = shoot;
@@ -37,7 +37,7 @@ public class ShooterSub extends SubsystemBase {
   }
 
 
-  public void setShooterVolts(double volts) {
+  public void setShooterOutput(double volts) {
     io.setShooterVolts(volts);
   }
 
@@ -45,4 +45,8 @@ public class ShooterSub extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-  }*/
+  }
+
+
+
+}

@@ -1,4 +1,4 @@
-/*package frc.robot.Subsystem.Shooter;
+package frc.robot.Subsystem.Shooter;
 
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.revrobotics.CANSparkMax;
@@ -24,17 +24,22 @@ public class ShooterIOSim implements ShooterIO {
         ShooterV = new VoltageOut(0.0);
         FeederV = new VoltageOut(0.0);
     }
+
     
-    @Override
-    public void getFeederVolts(double volts) {
-    }
-
-    @Override
-    public void getShooterVolts(double volts) {
-    }
-
     @Override
     public void getData(ShooterData data) {
     }
+
+    @Override
+    public void setFeederVolts(double volts) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setFeederVolts'");
+    }
+
+    @Override
+    public void setShooterVolts(double volts) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setShooterVolts'");
+    }
     
-}*/
+}

@@ -6,26 +6,33 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.Modes;
 import frc.robot.Subsystem.Drivetrain.DrivetrainIOSim;
 import frc.robot.Subsystem.Drivetrain.DrivetrainSubsystem;
-//import frc.robot.Subsystem.Shooter.ShooterSub;
+import frc.robot.Subsystem.Shooter.ShooterSub;
+import frc.robot.Subsystem.Shooter.Commands.RunShooter;
 
 public class RobotContainer {
   // Create a new Xbox controller on port 0
   CommandXboxController controller = new CommandXboxController(0);
   DrivetrainSubsystem drivetrainSubsystem;
+  ShooterSub shootersub;
+  RunShooter runShooter;   //hi
 
   public RobotContainer() {
     if (Constants.state == Modes.kSim) {
       drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOSim());
+      runShooter = new RunShooter(shootersub, 0);
     }
     if (Constants.state == Modes.kReal) {
       drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOSim());
+      runShooter = new RunShooter(shootersub, 0);
     }
     if (Constants.state == Modes.kReplay) {
       drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOSim());
+      runShooter = new RunShooter(shootersub, 0);
     }
     configureBindings();
   }
@@ -35,11 +42,7 @@ public class RobotContainer {
         drivetrainSubsystem.setVoltagesArcadeCommand(
             () -> controller.getLeftY(),
             () -> controller.getRightX()));
-    /*shootersub.setDefaultCommand(
-      ShooterSub.setVoltagesCommand(
-        controller.a().whiletrue(Shootersub.);
-        )
-      );*/
+            controller.a().whileTrue(runShooter);
   }
 
   public Command getAutonomousCommand() {
