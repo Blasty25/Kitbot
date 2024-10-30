@@ -17,7 +17,6 @@ import frc.robot.Subsystem.Shooter.ShooterIO;
 
 public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
-  ShooterIO io;
   private RobotContainer m_robotContainer;
 
   @Override
@@ -36,9 +35,6 @@ if (isReal()) {
 // Logger.getInstance().disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
 Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
     m_robotContainer = new RobotContainer();
-  }
-    public Robot(ShooterIO Shoot){
-    io = Shoot;
   }
   
 

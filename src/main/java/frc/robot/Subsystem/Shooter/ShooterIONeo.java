@@ -5,24 +5,18 @@
 package frc.robot.Subsystem.Shooter;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants;
 
-/** Add your docs here. */
 public class ShooterIONeo implements ShooterIO{
     CANSparkMax Shooter;
     CANSparkMax Feeder;
-    RelativeEncoder ShooterEncoder;
-    RelativeEncoder FeederEncoder;
     
     public ShooterIONeo() {
-        Shooter = new CANSparkMax(Constants.shooterID, MotorType.kBrushless);
-        Feeder = new CANSparkMax(Constants.feederID, MotorType.kBrushless);
-        ShooterEncoder = Shooter.getEncoder();
-        FeederEncoder = Shooter.getEncoder();
+        Shooter = new CANSparkMax(Constants.DriveConstants.shooterID, MotorType.kBrushless);
+        Feeder = new CANSparkMax(Constants.DriveConstants.feederID, MotorType.kBrushless);
 
         Shooter.restoreFactoryDefaults();
         Feeder.restoreFactoryDefaults();
@@ -46,17 +40,6 @@ public class ShooterIONeo implements ShooterIO{
     }
     @Override
     public void getData(ShooterData data) {
-        data.ShooterVelocity = ShooterEncoder.getVelocity();
-        data.FeederVelocity = FeederEncoder.getVelocity();
-
-        data.ShooterOutput = Shooter.getAppliedOutput();
-        data.FeederOutput = Feeder.getAppliedOutput();
-
-        data.ShooterAMPs = Shooter.getOutputCurrent();
-        data.FeederAMPs = Feeder.getOutputCurrent();
-
-        data.ShooterTemp = Shooter.getMotorTemperature();
-        data.FeederTemp = Feeder.getMotorTemperature();
     }
 
 }
