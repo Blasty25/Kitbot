@@ -26,17 +26,6 @@ public class MontySubsytem extends SubsystemBase {
         io.arcadeDrive(xSpeed * RobotController.getInputVoltage(), turn * RobotController.getInputVoltage());
     }
 
-    public Command ArcadeDrive(DoubleSupplier xSpeeDoubleSupplier, DoubleSupplier zRotationSupplier) {
-        return new RunCommand(() -> {
-            double Speed = xSpeeDoubleSupplier.getAsDouble();
-            double Rotation = zRotationSupplier.getAsDouble();
-            Speed = MathUtil.applyDeadband(Speed, 0.25);
-            Rotation = MathUtil.applyDeadband(Rotation, 0.25);
-            double leftSpeed = Speed - Rotation;
-            double rightSpeed = Speed + Rotation;
-            this.arcadeDrive(leftSpeed, rightSpeed);
-        }, this);
-    }
 
     @Override
     public void periodic() {
@@ -53,4 +42,17 @@ public class MontySubsytem extends SubsystemBase {
         Logger.recordOutput("Drivetrain Pose", odometry.getPoseMeters());
 
     }
+
+        public Command ArcadeDrive(DoubleSupplier xSpeeDoubleSupplier, DoubleSupplier zRotationSupplier) {
+        return new RunCommand(() -> {
+            double Speed = xSpeeDoubleSupplier.getAsDouble();
+            double Rotation = zRotationSupplier.getAsDouble();
+            Speed = MathUtil.applyDeadband(Speed, 0.15);
+            Rotation = MathUtil.applyDeadband(Rotation, 0.15);
+            double leftSpeed = Speed - Rotation;
+            double rightSpeed = Speed + Rotation;
+            this.arcadeDrive(leftSpeed, rightSpeed);
+        }, this);
+    }
+
 }

@@ -57,8 +57,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     return new RunCommand(() -> {
       double drive = driveSupplier.getAsDouble();
       double steer = steerSupplier.getAsDouble();
-      drive = MathUtil.applyDeadband(drive, 0.25);
-      steer = MathUtil.applyDeadband(steer, 0.25);
+      drive = MathUtil.applyDeadband(drive, 0.1);
+      steer = MathUtil.applyDeadband(steer, 0.1);
       double left = drive - steer;
       double right = drive + steer;
       this.setVoltages(left, right);

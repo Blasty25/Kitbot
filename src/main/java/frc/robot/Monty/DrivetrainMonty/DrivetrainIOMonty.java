@@ -11,8 +11,8 @@ import frc.robot.Constants.DriveConstants;
 
 public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstart {
 
-    public static CANSparkMax frontLeft = new CANSparkMax(DriveConstants.fL, MotorType.kBrushless);
-    public static CANSparkMax frontRight = new CANSparkMax(DriveConstants.fR, MotorType.kBrushless);
+    public CANSparkMax frontLeft = new CANSparkMax(DriveConstants.fL, MotorType.kBrushless);
+    public CANSparkMax frontRight = new CANSparkMax(DriveConstants.fR, MotorType.kBrushless);
     public CANSparkMax backLeft = new CANSparkMax(DriveConstants.bL, MotorType.kBrushless);
     public CANSparkMax backRight = new CANSparkMax(DriveConstants.bR, MotorType.kBrushless);
 
@@ -25,7 +25,7 @@ public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstar
         backLeft.restoreFactoryDefaults();
         backLeft.setIdleMode(IdleMode.kBrake);
         backLeft.setSmartCurrentLimit(45);
-        backLeft.follow(frontLeft);
+        backLeft.follow(frontRight);
         backLeft.burnFlash();
 
         frontRight.restoreFactoryDefaults();
@@ -36,7 +36,7 @@ public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstar
         backRight.restoreFactoryDefaults();
         backRight.setIdleMode(IdleMode.kBrake);
         backRight.setSmartCurrentLimit(45);
-        backRight.follow(frontRight);
+        backRight.follow(frontLeft);
         backRight.burnFlash();
     }
 

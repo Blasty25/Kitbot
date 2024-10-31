@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotWheelSiz
 
 public class MontyIOSim implements DrivetrainIOstart {
     DifferentialDrivetrainSim physicsSim = DifferentialDrivetrainSim.createKitbotSim(
-            KitbotMotor.kDoubleFalcon500PerSide,
+            KitbotMotor.kDoubleNEOPerSide,
             KitbotGearing.k8p45,
             KitbotWheelSize.kSixInch,
             null);

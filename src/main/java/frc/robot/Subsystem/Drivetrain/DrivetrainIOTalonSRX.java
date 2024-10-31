@@ -20,12 +20,12 @@ public class DrivetrainIOTalonSRX implements DrivetrainIO {
         frontLeft.configFactoryDefault();
         frontRight.configFactoryDefault();
         // invert the left side motors
-        backLeft.setInverted(true);
-        frontLeft.setInverted(true);
-        backRight.setInverted(false);
-        frontRight.setInverted(false);
-        backLeft.follow(frontLeft);
-        backRight.follow(frontRight);
+        backLeft.setInverted(false);
+        frontLeft.setInverted(false);
+        backRight.setInverted(true);
+        frontRight.setInverted(true);
+        frontRight.follow(backRight);
+        frontLeft.follow(backLeft);
 
         backLeft.setNeutralMode(NeutralMode.Coast);
         backRight.setNeutralMode(NeutralMode.Coast);
