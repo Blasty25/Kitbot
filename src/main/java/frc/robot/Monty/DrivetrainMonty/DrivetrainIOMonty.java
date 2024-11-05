@@ -20,30 +20,39 @@ public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstar
         frontLeft.restoreFactoryDefaults();
         frontLeft.setIdleMode(IdleMode.kBrake);
         frontLeft.setSmartCurrentLimit(45);
+        frontLeft.setInverted(true);
         frontLeft.burnFlash();
 
         backLeft.restoreFactoryDefaults();
         backLeft.setIdleMode(IdleMode.kBrake);
         backLeft.setSmartCurrentLimit(45);
-        backLeft.follow(frontRight);
+        backLeft.setInverted(true);
+        backLeft.follow(frontLeft);
         backLeft.burnFlash();
 
         frontRight.restoreFactoryDefaults();
         frontRight.setIdleMode(IdleMode.kBrake);
         frontRight.setSmartCurrentLimit(45);
+        frontRight.setInverted(false);
         frontRight.burnFlash();
 
         backRight.restoreFactoryDefaults();
         backRight.setIdleMode(IdleMode.kBrake);
         backRight.setSmartCurrentLimit(45);
-        backRight.follow(frontLeft);
+        backRight.setInverted(false);
+        backRight.follow(frontRight);
         backRight.burnFlash();
+
+        SmartDashboard.putNumber("FrontLeftId", frontLeft.getDeviceId());
+        SmartDashboard.putNumber("FrontRightId", frontRight.getDeviceId());
+        SmartDashboard.putNumber("BackLeftId", backLeft.getDeviceId());
+        SmartDashboard.putNumber("BackRightId", backRight.getDeviceId());
     }
 
     public void arcadeDrive(double xSpeed, double turn) {
 
         // Applying the max speeds to motors
-        xSpeed *= DriveConstants.maxDriveSpeed;
+        xSpeed *= -DriveConstants.maxDriveSpeed;
         turn *= DriveConstants.maxTurnSpeed;
 
         if (DriveConstants.squareInputs) {
@@ -52,8 +61,8 @@ public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstar
         }
 
         // Creates the saturated speeds of the motors
-        double leftSpeed = xSpeed - turn;
-        double rightSpeed = xSpeed + turn;
+        double leftSpeed = xSpeed + turn;
+        double rightSpeed = xSpeed - turn;
 
         // Finds the maximum possible value of throttle + turn along the vector that the
         // joystick is pointing, and then desaturates the wheel speeds.
@@ -71,6 +80,9 @@ public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstar
         // Puts the left and right speeds onto SmartDashboard.
         SmartDashboard.putNumber("LeftSpeed", leftSpeed);
         SmartDashboard.putNumber("RightSpeed", rightSpeed);
+
+        SmartDashboard.putNumber("xSpeed", xSpeed);
+        SmartDashboard.putNumber("turnSpeed", turn);
 
         // Sets the speed of the motors.
         frontLeft.set(leftSpeed);

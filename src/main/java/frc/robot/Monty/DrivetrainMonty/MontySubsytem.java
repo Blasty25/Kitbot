@@ -3,7 +3,6 @@ package frc.robot.Monty.DrivetrainMonty;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,7 +22,7 @@ public class MontySubsytem extends SubsystemBase {
     }
 
     public void arcadeDrive(double xSpeed, double turn) {
-        io.arcadeDrive(xSpeed * RobotController.getInputVoltage(), turn * RobotController.getInputVoltage());
+        io.arcadeDrive(xSpeed, turn);
     }
 
 
@@ -43,15 +42,14 @@ public class MontySubsytem extends SubsystemBase {
 
     }
 
-        public Command ArcadeDrive(DoubleSupplier xSpeeDoubleSupplier, DoubleSupplier zRotationSupplier) {
+        public Command ArcadeDrive(DoubleSupplier xSpeedDoubleSupplier, DoubleSupplier zRotationSupplier) {
         return new RunCommand(() -> {
-            double Speed = xSpeeDoubleSupplier.getAsDouble();
+            double Speed = xSpeedDoubleSupplier.getAsDouble();
             double Rotation = zRotationSupplier.getAsDouble();
             Speed = MathUtil.applyDeadband(Speed, 0.15);
             Rotation = MathUtil.applyDeadband(Rotation, 0.15);
-            double leftSpeed = Speed - Rotation;
-            double rightSpeed = Speed + Rotation;
-            this.arcadeDrive(leftSpeed, rightSpeed);
+            
+            this.arcadeDrive(Speed, Rotation);
         }, this);
     }
 

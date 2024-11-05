@@ -49,9 +49,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   }
 
-  /*public Command setVoltagesCommand(DoubleSupplier left, DoubleSupplier right) {
+  public Command setVoltagesCommand(DoubleSupplier left, DoubleSupplier right) {
     return new RunCommand(() -> this.setVoltages(left.getAsDouble(), right.getAsDouble()), this);
-  }*/
+  }
 
   public Command setVoltagesArcadeCommand(DoubleSupplier driveSupplier, DoubleSupplier steerSupplier) {
     return new RunCommand(() -> {

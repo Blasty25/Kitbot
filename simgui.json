@@ -4,9 +4,17 @@
       "/FMSInfo": "FMSInfo"
     }
   },
+  "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    }
+  },
   "NetworkTables Info": {
     "Server": {
       "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
         "open": true
       },
       "open": true

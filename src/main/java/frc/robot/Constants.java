@@ -8,10 +8,10 @@ package frc.robot;
 public class Constants {
     public static class DriveConstants {
         // talons
-        public static final int backLeft = 2;
+        public static final int backLeft = 3;
         public static final int frontLeft = 1;
         public static final int backRight = 4;
-        public static final int frontRight = 3;
+        public static final int frontRight = 2;
 
         // Monty SparkMaxes
 
@@ -27,6 +27,13 @@ public class Constants {
 
     }
 
+    public class MontyIntake{
+        public static final int frontRoller = 11;
+        public static final int leftIndexxer = 12;
+        public static final int rightIndexxer = 13;
+        public static final int bottomTrack = 14;
+        public static final int Solenoid = 8;
+    }
     // Sparks
     public static final int shooterID = 12;
     public static final int feederID = 11;
@@ -42,12 +49,6 @@ public class Constants {
         Kitbot;
     }
 
-    public enum Control {
-        Keyboard,
-        Controller,
-    }
-
     public static final RobotType type = RobotType.Monty;
     public static final Modes state = Modes.kSim;
-    public static final Control currentMode = Control.Controller;
 }

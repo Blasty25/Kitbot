@@ -9,14 +9,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.Modes;
-import frc.robot.Monty.Commands.ArcadeDrive;
 import frc.robot.Monty.DrivetrainMonty.DrivetrainIOMonty;
 import frc.robot.Monty.DrivetrainMonty.MontyIOSim;
 import frc.robot.Monty.DrivetrainMonty.MontySubsytem;
 import frc.robot.Subsystem.Drivetrain.DrivetrainIOSim;
 import frc.robot.Subsystem.Drivetrain.DrivetrainIOTalonSRX;
 import frc.robot.Subsystem.Drivetrain.DrivetrainSubsystem;
-import frc.robot.Subsystem.Shooter.ShooterIO;
 import frc.robot.Subsystem.Shooter.ShooterIONeo;
 import frc.robot.Subsystem.Shooter.ShooterIOSim;
 import frc.robot.Subsystem.Shooter.ShooterSub;
@@ -31,8 +29,9 @@ public class RobotContainer {
   DrivetrainSubsystem drivetrainSubsystem;
   MontySubsytem montySubsytem;
   ShooterSub shootersub;
-  RunShooter runShooter; 
+  RunShooter runShooter;
   RunFeeder runFeeder;
+  
 
   public RobotContainer() {
     if (Constants.state == Modes.kSim) {
@@ -55,24 +54,25 @@ public class RobotContainer {
 
   private void configureBindings() {
     switch (Constants.type) {
-      case Monty:
-
-      montySubsytem.setDefaultCommand(
-        montySubsytem.ArcadeDrive(
-          () -> controller.getLeftY(),
-          () -> controller.getRightX()));
-
-        break;
 
       case Kitbot:
 
-         drivetrainSubsystem.setDefaultCommand(
+        drivetrainSubsystem.setDefaultCommand(
             drivetrainSubsystem.setVoltagesArcadeCommand(
                 () -> controller.getLeftY(),
                 () -> controller.getRightX()));
 
         controller.a().whileTrue(new RunFeeder(shootersub, 0));
         controller.leftTrigger(0).whileTrue(new RunShooter(shootersub, 0));
+        break;
+
+      case Monty:
+
+        montySubsytem.setDefaultCommand(
+            montySubsytem.ArcadeDrive(
+                () -> controller.getLeftY(),
+                () -> controller.getRightX()));
+
         break;
 
       default:

@@ -1,6 +1,5 @@
 package frc.robot.Subsystem.Shooter.Commands;
 
-import com.ctre.phoenix6.configs.VoltageConfigs;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystem.Shooter.ShooterSub;
