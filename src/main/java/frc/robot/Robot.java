@@ -22,18 +22,17 @@ public class Robot extends LoggedRobot {
   public void robotInit() {
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
-if (isReal()) {
-    Logger.addDataReceiver(new WPILOGWriter("/media/sda1/")); // Log to a USB stick
-    Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-    new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging
-} else {
-    
-    Logger.addDataReceiver(new NT4Publisher()); // Save outputs to a new log
-}
+    if (isReal()) {
+      Logger.addDataReceiver(new WPILOGWriter("/media/sda1/")); // Log to a USB stick
+      Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+      new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging
+    } else {
+      Logger.addDataReceiver(new NT4Publisher()); // Save outputs to a new log
+    }
 
-// Logger.getInstance().disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
-Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
-    m_robotContainer = new RobotContainer();
+    // Logger.getInstance().disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
+    Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+    m_robotContainer = new RobotContainer(isReal());
   }
   
 

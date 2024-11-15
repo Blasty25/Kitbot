@@ -49,11 +49,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   }
 
-  public Command setVoltagesCommand(DoubleSupplier left, DoubleSupplier right) {
+  public Command voltagesTankCommand(DoubleSupplier left, DoubleSupplier right) {
     return new RunCommand(() -> this.setVoltages(left.getAsDouble(), right.getAsDouble()), this);
   }
 
-  public Command setVoltagesArcadeCommand(DoubleSupplier driveSupplier, DoubleSupplier steerSupplier) {
+  public Command voltagesArcadeCommand(DoubleSupplier driveSupplier, DoubleSupplier steerSupplier) {
     return new RunCommand(() -> {
       double drive = driveSupplier.getAsDouble();
       double steer = steerSupplier.getAsDouble();
@@ -61,6 +61,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
       steer = MathUtil.applyDeadband(steer, 0.1);
       double left = drive - steer;
       double right = drive + steer;
+      
       this.setVoltages(left, right);
 
     }, this);

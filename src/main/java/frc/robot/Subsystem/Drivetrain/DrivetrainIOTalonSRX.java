@@ -3,6 +3,10 @@ package frc.robot.Subsystem.Drivetrain;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackType;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 import edu.wpi.first.wpilibj.RobotController;
 
 import frc.robot.Constants;
@@ -15,6 +19,7 @@ public class DrivetrainIOTalonSRX implements DrivetrainIO {
     TalonSRX frontRight = new TalonSRX(Constants.DriveConstants.frontRight);
 
     public DrivetrainIOTalonSRX() {
+
         backLeft.configFactoryDefault();
         backRight.configFactoryDefault();
         frontLeft.configFactoryDefault();
@@ -24,13 +29,13 @@ public class DrivetrainIOTalonSRX implements DrivetrainIO {
         frontLeft.setInverted(false);
         backRight.setInverted(true);
         frontRight.setInverted(true);
-        frontRight.follow(backRight);
-        frontLeft.follow(backLeft);
+        backRight.follow(frontRight);
+        backLeft.follow(frontLeft);
 
-        backLeft.setNeutralMode(NeutralMode.Coast);
-        backRight.setNeutralMode(NeutralMode.Coast);
-        frontLeft.setNeutralMode(NeutralMode.Coast);
-        frontRight.setNeutralMode(NeutralMode.Coast);
+        backLeft.setNeutralMode(NeutralMode.Brake);
+        backRight.setNeutralMode(NeutralMode.Brake);
+        frontLeft.setNeutralMode(NeutralMode.Brake);
+        frontRight.setNeutralMode(NeutralMode.Brake);
 
     }
 
