@@ -1,6 +1,10 @@
 package frc.robot.Subsystem.Shooter;
 
+import org.littletonrobotics.junction.AutoLog;
+
 public interface ShooterIO {
+
+    @AutoLog
     public static class ShooterData{
     public double ShooterV = 0.0;
     public double FeederV = 0.0;

@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -26,6 +27,7 @@ import frc.robot.Subsystem.Shooter.ShooterIOSim;
 import frc.robot.Subsystem.Shooter.ShooterSub;
 import frc.robot.Subsystem.Shooter.Commands.RunFeeder;
 import frc.robot.Subsystem.Shooter.Commands.RunShooter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotContainer {
 
