@@ -17,6 +17,7 @@ import edu.wpi.first.math.MathUtil;
 import java.util.function.DoubleSupplier;
 
 import org.littletonrobotics.junction.Logger;
+import org.opencv.calib3d.StereoBM;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   DrivetrainIO io;
@@ -49,8 +50,18 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   }
 
-  public Command voltagesTankCommand(DoubleSupplier left, DoubleSupplier right) {
-    return new RunCommand(() -> this.setVoltages(left.getAsDouble(), right.getAsDouble()), this);
+  public Command voltagesTankCommand(DoubleSupplier driveSupplier, DoubleSupplier steerSupplier) {
+    return new RunCommand(() ->{
+      double drive = driveSupplier.getAsDouble();
+      double steer = steerSupplier.getAsDouble();
+      drive = MathUtil.applyDeadband(drive, 0.1);
+      steer = MathUtil.applyDeadband(steer, 0.1);
+      double left = drive;
+      double right = steer;
+
+      this.setVoltages(left, right);
+
+    }, this);
   }
 
   public Command voltagesArcadeCommand(DoubleSupplier driveSupplier, DoubleSupplier steerSupplier) {

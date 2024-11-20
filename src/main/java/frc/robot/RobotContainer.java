@@ -42,7 +42,7 @@ public class RobotContainer {
     public RobotContainer(boolean isReal) {
         if (isReal) {
             if (Constants.type == RobotType.Kitbot) {
-                // shootersub = new ShooterSub(new ShooterIONeo());
+                shootersub = new ShooterSub(new ShooterIONeo());
                 drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOTalonSRX());
             }
 
@@ -52,7 +52,7 @@ public class RobotContainer {
             }
         } else {
             if (Constants.type == RobotType.Kitbot) {
-                // shootersub = new ShooterSub(new ShooterIOSim());
+                shootersub = new ShooterSub(new ShooterIOSim());
                 drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOSim());
             }
 
@@ -72,18 +72,17 @@ public class RobotContainer {
                         drivetrainSubsystem.voltagesArcadeCommand(
                                 () -> -controller.getLeftY(),
                                 () -> -controller.getRightX()));
-
-                 controller.a().whileTrue(new RunFeeder(shootersub, 0)); // A to run feeder motors
+                 controller.a().whileTrue(new RunFeeder(shootersub, 5)); // A to run feeder motors
                  controller.leftTrigger(0.5).whileTrue(new RunShooter(shootersub, 0)); // Left trigger to shoot notes
                 break;
 
             case Monty:
                 montySubsytem.setDefaultCommand(
                         montySubsytem.ArcadeDrive(
-                                () -> controller.getLeftY(),
-                                () -> controller.getRightX()));
+                                () -> controller.getRightX(),
+                                () -> controller.getLeftY()));
                 controller.x().whileTrue(new RunIntake(m_intake, 1));    //Run intake motors
-                controller.rightBumper().onTrue(new SetIntakeState(m_intake, true));  //Move the intake down
+                controller.b().toggleOnTrue(new SetIntakeState(m_intake, true));  //Move the intake down
                 controller.rightTrigger(0.5).whileTrue(new RunFeed(new m_ShooterSub(), 1));   //shoot the ball after flyweels are spunt
                 controller.y().toggleOnTrue(new RunLaunch(new m_ShooterSub(), 1));  //toggles the flyweels              
                 break;
