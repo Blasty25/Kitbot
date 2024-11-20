@@ -4,7 +4,11 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -92,6 +96,9 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return new PrintCommand("Nah cya chat");
+        NamedCommands.registerCommand("RunShooter", new RunShooter(shootersub, RobotController.getInputVoltage()));
+        NamedCommands.registerCommand("RunFeeder", new RunFeeder(shootersub, RobotController.getInputVoltage()));
+        
+        return new PathPlannerAuto("Soham");
     }
 }

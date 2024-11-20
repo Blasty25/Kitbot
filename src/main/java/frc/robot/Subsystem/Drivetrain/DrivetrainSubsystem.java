@@ -5,6 +5,7 @@
 
 package frc.robot.Subsystem.Drivetrain;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
@@ -17,13 +18,14 @@ import edu.wpi.first.math.MathUtil;
 import java.util.function.DoubleSupplier;
 
 import org.littletonrobotics.junction.Logger;
-import org.opencv.calib3d.StereoBM;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   DrivetrainIO io;
   DrivetrainIOInputsAutoLogged inputs = new DrivetrainIOInputsAutoLogged();
 
-  DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0);
+  DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0, new Pose2d(2, 7, new Rotation2d()));
+
+
 
 
   public DrivetrainSubsystem(DrivetrainIO motors) {

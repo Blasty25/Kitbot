@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+
 /** Add your docs here. */
 public class Constants {
     // public static class Kitbot {}
@@ -22,6 +24,9 @@ public class Constants {
         public static final int fL = 1;
         public static final int fR = 2;
 
+        
+        public static final double m_RobotWidth = Units.inchesToMeters(15);
+
 
 
         // Other Monty Constants
@@ -30,6 +35,7 @@ public class Constants {
         public static final boolean squareInputs = true;
 
     }
+
 
     public class MontyIntake {
         public static final int frontRoller = 11;
