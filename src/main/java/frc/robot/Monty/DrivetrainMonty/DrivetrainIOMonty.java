@@ -19,26 +19,26 @@ public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstar
     public DrivetrainIOMonty() {
         frontLeft.restoreFactoryDefaults();
         frontLeft.setIdleMode(IdleMode.kBrake);
-        frontLeft.setSmartCurrentLimit(45);
-        frontLeft.setInverted(true);
+        frontLeft.setSmartCurrentLimit(50);
+        frontLeft.setInverted(false);
         frontLeft.burnFlash();
 
         backLeft.restoreFactoryDefaults();
         backLeft.setIdleMode(IdleMode.kBrake);
-        backLeft.setSmartCurrentLimit(45);
-        backLeft.setInverted(true);
+        backLeft.setSmartCurrentLimit(50);
+        backLeft.setInverted(false);
         backLeft.follow(frontLeft);
         backLeft.burnFlash();
 
         frontRight.restoreFactoryDefaults();
         frontRight.setIdleMode(IdleMode.kBrake);
-        frontRight.setSmartCurrentLimit(45);
+        frontRight.setSmartCurrentLimit(50);
         frontRight.setInverted(false);
         frontRight.burnFlash();
 
         backRight.restoreFactoryDefaults();
         backRight.setIdleMode(IdleMode.kBrake);
-        backRight.setSmartCurrentLimit(45);
+        backRight.setSmartCurrentLimit(50);
         backRight.setInverted(false);
         backRight.follow(frontRight);
         backRight.burnFlash();
@@ -49,44 +49,9 @@ public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstar
         SmartDashboard.putNumber("BackRightId", backRight.getDeviceId());
     }
 
-    public void arcadeDrive(double xSpeed, double turn) {
-
-        // Applying the max speeds to motors
-        xSpeed *= -DriveConstants.maxDriveSpeed;
-        turn *= DriveConstants.maxTurnSpeed;
-
-        if (DriveConstants.squareInputs) {
-            xSpeed = Math.copySign(xSpeed * xSpeed, xSpeed);
-            turn = Math.copySign(turn * turn, turn);
-        }
-
-        // Creates the saturated speeds of the motors
-        double leftSpeed = xSpeed + turn;
-        double rightSpeed = xSpeed - turn;
-
-        // Finds the maximum possible value of throttle + turn along the vector that the
-        // joystick is pointing, and then desaturates the wheel speeds.
-        double greaterInput = Math.max(Math.abs(xSpeed), Math.abs(turn));
-        double lesserInput = Math.min(Math.abs(xSpeed), Math.abs(turn));
-        if (greaterInput == 0.0) {
-            leftSpeed = 0;
-            rightSpeed = 0;
-        } else {
-            double saturatedInput = (greaterInput + lesserInput) / greaterInput;
-            leftSpeed /= saturatedInput;
-            rightSpeed /= saturatedInput;
-        }
-
-        // Puts the left and right speeds onto SmartDashboard.
-        SmartDashboard.putNumber("LeftSpeed", leftSpeed);
-        SmartDashboard.putNumber("RightSpeed", rightSpeed);
-
-        SmartDashboard.putNumber("xSpeed", xSpeed);
-        SmartDashboard.putNumber("turnSpeed", turn);
-
-        // Sets the speed of the motors.
-        frontLeft.set(leftSpeed);
-        frontRight.set(rightSpeed);
+    public void arcadeDrive(double left, double right) {
+        frontLeft.setVoltage(left);
+        frontRight.setVoltage(right);
     }
 
     @Override

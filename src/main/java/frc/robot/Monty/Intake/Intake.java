@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants;
 import frc.robot.Constants.MontyIntake;;
 
 public class Intake extends SubsystemBase {
@@ -29,7 +29,7 @@ public class Intake extends SubsystemBase {
      */
     public Intake(PneumaticHub hub) {
         // Creating the solenoid.
-        intake = hub.makeSolenoid(12);
+        intake = hub.makeSolenoid(Constants.MontyIntake.feedersolenoid);
 
         // Restoring the factory defaults of each motor.
         frontRoller.configFactoryDefault();

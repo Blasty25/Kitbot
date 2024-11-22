@@ -24,6 +24,6 @@ public interface DrivetrainIOstart {
 
 
     public void updateInputs(DrivetrainIOInputs inputs);
-    public void arcadeDrive(double xSpeed, double turn);
+    public void arcadeDrive(double left, double right);
 
 }

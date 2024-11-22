@@ -16,24 +16,22 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.math.MathUtil;
 
-import java.lang.reflect.Field;
 import java.util.function.DoubleSupplier;
 
 import org.littletonrobotics.junction.Logger;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 public class MontySubsytem extends SubsystemBase {
     DrivetrainIOstart io;
     DrivetrainIOInputsAutoLogged inputs = new DrivetrainIOInputsAutoLogged();
-    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0);
+
+    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0, new Pose2d(2,7, new Rotation2d()));
+
     DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(DriveConstants.m_RobotWidth);
     private Field2d field = new Field2d();
 
@@ -41,19 +39,24 @@ public class MontySubsytem extends SubsystemBase {
         io = motor;
 
         // Auto for Monty(Config)
-        AutoBuilder.configureRamsete( // Have to import all of the method etc. Use Jacksons as a refrence
+        AutoBuilder.configureRamsete( 
                 this::getPose, // https://github.com/Turbojax07/TestPanel-Swerve/blob/AdvantageKit/src/main/java/frc/robot/Drivetrain/Drivetrain.java#L194
                 this::setPose,
                 this::getSpeeds,
                 this::drive,
                 new ReplanningConfig(),
                 () -> (DriverStation.getAlliance().isPresent()
-                        && DriverStation.getAlliance().get().equals(Alliance.Red)),
+                        && DriverStation.getAlliance().get().equals(Alliance.Blue)),
                 this);
     }
 
-    public void arcadeDrive(double xSpeed, double turn) {  //Real Implemntation
-        io.arcadeDrive(xSpeed, turn);
+    public void arcadeDrive(double speed, double rotation) { // Real Implemntation
+        speed = MathUtil.applyDeadband(speed, 0.1);
+        rotation = MathUtil.applyDeadband(rotation, 0.1);
+        double left = speed + rotation;
+        double right = speed - rotation;
+        
+        io.arcadeDrive(left, right);
     }
 
     @Override
@@ -79,27 +82,22 @@ public class MontySubsytem extends SubsystemBase {
 
     public void setPose(Pose2d pose2d) {
         field.setRobotPose(pose2d);
-        odometry.resetPosition(odometry.getPoseMeters().getRotation(), new DifferentialDriveWheelPositions(inputs.leftPositionMeters, inputs.rightPositionMeters), pose2d);
+        odometry.resetPosition(odometry.getPoseMeters().getRotation(),
+                new DifferentialDriveWheelPositions(inputs.leftPositionMeters, inputs.rightPositionMeters), pose2d);
     }
 
-    public ChassisSpeeds getSpeeds(){
-        return kinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(inputs.leftVelocityMetersPerSecond, inputs.rightVelocityMetersPerSecond));
+    public ChassisSpeeds getSpeeds() {
+        return kinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(inputs.leftVelocityMetersPerSecond,
+                inputs.rightVelocityMetersPerSecond));
     }
 
-    public void drive(ChassisSpeeds chassisSpeeds){  //PathPlanner(Autos)
+    public void drive(ChassisSpeeds chassisSpeeds) { // PathPlanner(Autos)
         arcadeDrive(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.omegaRadiansPerSecond);
     }
 
     public Command ArcadeDrive(DoubleSupplier xSpeedDoubleSupplier, DoubleSupplier zRotationSupplier) {
         return new RunCommand(() -> {
-            double speed = xSpeedDoubleSupplier.getAsDouble();
-            double rotation = zRotationSupplier.getAsDouble();
-            speed = MathUtil.applyDeadband(speed, 0.15);
-            rotation = MathUtil.applyDeadband(rotation, 0.15);
-            double left = speed - rotation;
-            double right = speed + rotation;
-
-            this.arcadeDrive(left, right);
+            this.arcadeDrive(xSpeedDoubleSupplier.getAsDouble(), zRotationSupplier.getAsDouble());
         }, this);
     }
 

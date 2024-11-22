@@ -11,23 +11,23 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants;
 
 public class ShooterIONeo implements ShooterIO{
-    // CANSparkMax Shooter;
+    CANSparkMax Shooter;
     CANSparkMax Feeder;
     
     public ShooterIONeo() {
-        // Shooter = new CANSparkMax(Constants.shooterID, MotorType.kBrushless);
+        Shooter = new CANSparkMax(Constants.shooterID, MotorType.kBrushless);
         Feeder = new CANSparkMax(Constants.feederID, MotorType.kBrushless);
 
-        // Shooter.restoreFactoryDefaults();
+        Shooter.restoreFactoryDefaults();
         Feeder.restoreFactoryDefaults();
         
-        // Shooter.setIdleMode(IdleMode.kCoast);
+        Shooter.setIdleMode(IdleMode.kCoast);
         Feeder.setIdleMode(IdleMode.kCoast);
         
-        // Shooter.setInverted(true);
-        Feeder.setInverted(true);
+        Shooter.setInverted(false);
+        Feeder.setInverted(false);
 
-        // Shooter.burnFlash();
+        Shooter.burnFlash();
         Feeder.burnFlash();
     }
     @Override
@@ -36,7 +36,7 @@ public class ShooterIONeo implements ShooterIO{
     }
     @Override
     public void setShooterVolts(double volts) {
-        // Shooter.setVoltage(volts);
+        Shooter.setVoltage(volts);
     }
     @Override
     public void getData(ShooterData data) {

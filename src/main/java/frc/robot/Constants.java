@@ -30,34 +30,43 @@ public class Constants {
 
 
         // Other Monty Constants
-        public static final double maxDriveSpeed = 0.5;
-        public static final double maxTurnSpeed = 0.5;
-        public static final boolean squareInputs = true;
+        public static final double maxLeftSpeed = 2 * Math.PI;
+        public static final double maxRightSpeed = 2 * Math.PI;
 
     }
 
 
     public class MontyIntake {
         public static final int frontRoller = 11;
+
         public static final int leftIndexxer = 12;
         public static final int rightIndexxer = 13;
+
         public static final int bottomTrack = 14;
+
         public static final int LeftLaunchRollerID = 21;
         public static final int RightLaunchRollerID = 22;
+
         public static final int FeedRollerID = 23;
-        public static final double maxIntakeSpeed = 0.65;
-        public static final double maxLaunchSpeed = 0.65;
+
+        public static final double maxIntakeSpeed = 1;
+        public static final double maxLaunchSpeed = 1;
+
         public static final double maxFeedSpeed = 1;
-        public static final double intakeSolenoid = 7;
-        public static final double feedersolenoid = 15;
+
+        public static final int intakeSolenoid = 15;
+        public static final int feedersolenoid = 7;
+        
+		public static final double gearRatio = 12;
     }
 
-    // Sparks
-    public static final int shooterID = 12;
-    public static final int feederID = 11;
+////////////////KITBOT/////////////////////////////////////////
+    // Sparks                                           ///////
+    public static final int shooterID = 11; //KITBOT    //////
+    public static final int feederID = 12;             ///////
+//////////////////////////////////////////////////////////////
 
-
-    public static final boolean isReplay = false;
+    public static final boolean isReplay = true;
 
     public enum RobotType {
         Monty,
