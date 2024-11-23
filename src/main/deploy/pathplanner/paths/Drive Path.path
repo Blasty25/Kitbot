@@ -77,6 +77,12 @@
               }
             },
             {
+              "type": "named",
+              "data": {
+                "name": "RunShooter"
+              }
+            },
+            {
               "type": "sequential",
               "data": {
                 "commands": [
@@ -94,12 +100,6 @@
                   }
                 ]
               }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "RunShooter"
-              }
             }
           ]
         }
@@ -107,8 +107,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 15.0,
+    "maxAcceleration": 15.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

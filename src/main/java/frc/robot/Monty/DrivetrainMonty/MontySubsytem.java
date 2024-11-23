@@ -2,13 +2,11 @@ package frc.robot.Monty.DrivetrainMonty;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.struct.Pose2dStruct;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelPositions;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.proto.Kinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -30,17 +28,18 @@ public class MontySubsytem extends SubsystemBase {
     DrivetrainIOstart io;
     DrivetrainIOInputsAutoLogged inputs = new DrivetrainIOInputsAutoLogged();
 
-    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0, new Pose2d(2,7, new Rotation2d()));
+    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0,
+            new Pose2d(2, 7, new Rotation2d()));
 
     DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(DriveConstants.m_RobotWidth);
+
     private Field2d field = new Field2d();
 
-    public MontySubsytem(DrivetrainIOstart motor) {
-        io = motor;
-
+    public MontySubsytem(DrivetrainIOstart sim) {
+        io = sim;
         // Auto for Monty(Config)
-        AutoBuilder.configureRamsete( 
-                this::getPose, // https://github.com/Turbojax07/TestPanel-Swerve/blob/AdvantageKit/src/main/java/frc/robot/Drivetrain/Drivetrain.java#L194
+        AutoBuilder.configureRamsete(
+                this::getPose,
                 this::setPose,
                 this::getSpeeds,
                 this::drive,
@@ -55,7 +54,7 @@ public class MontySubsytem extends SubsystemBase {
         rotation = MathUtil.applyDeadband(rotation, 0.1);
         double left = speed + rotation;
         double right = speed - rotation;
-        
+
         io.arcadeDrive(left, right);
     }
 
@@ -67,7 +66,7 @@ public class MontySubsytem extends SubsystemBase {
                         // wheel speeds and distance between wheels
                         .plus(Rotation2d
                                 .fromRadians((inputs.leftVelocityMetersPerSecond - inputs.rightVelocityMetersPerSecond)
-                                        * 0.020 / Units.inchesToMeters(26))),
+                                        * 0.020 / Units.inchesToMeters(22))),  //26
                 inputs.leftPositionMeters, inputs.rightPositionMeters);
         io.updateInputs(inputs);
         Logger.processInputs("Drivetrain", inputs);
@@ -76,17 +75,17 @@ public class MontySubsytem extends SubsystemBase {
 
     }
 
-    public Pose2d getPose() {
+    public Pose2d getPose() {  //PathPlanner(Auto)
         return odometry.getPoseMeters();
     }
 
-    public void setPose(Pose2d pose2d) {
+    public void setPose(Pose2d pose2d) {  //PathPlanner(Auto)
         field.setRobotPose(pose2d);
         odometry.resetPosition(odometry.getPoseMeters().getRotation(),
                 new DifferentialDriveWheelPositions(inputs.leftPositionMeters, inputs.rightPositionMeters), pose2d);
     }
 
-    public ChassisSpeeds getSpeeds() {
+    public ChassisSpeeds getSpeeds() {  //PathPlanner(Auto)
         return kinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(inputs.leftVelocityMetersPerSecond,
                 inputs.rightVelocityMetersPerSecond));
     }

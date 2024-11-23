@@ -8,11 +8,8 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.RobotType;
 import frc.robot.Monty.DrivetrainMonty.DrivetrainIOMonty;
@@ -32,7 +29,6 @@ import frc.robot.Subsystem.Shooter.ShooterIOSim;
 import frc.robot.Subsystem.Shooter.ShooterSub;
 import frc.robot.Subsystem.Shooter.Commands.RunFeeder;
 import frc.robot.Subsystem.Shooter.Commands.RunShooter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotContainer {
 
@@ -44,9 +40,9 @@ public class RobotContainer {
     ShooterSub shootersub;
     Intake m_intake;
 
-    //Multiple commands at once
-    ParallelCommandGroup runIntake = new ParallelCommandGroup(new RunFeeder(shootersub, -5), new RunShooter(shootersub, -5)); //Run Kitbot intake
-    ParallelCommandGroup runBackward = new ParallelCommandGroup(new RunIntake(m_intake, -1), new RunFeed(new m_ShooterSub(), -1)); //Run Monty run feed backwards
+    // Multiple commands at once
+    ParallelCommandGroup runIntake = new ParallelCommandGroup(new RunFeeder(shootersub, -1),
+            new RunShooter(shootersub, -1)); // Run Kitbot intake
 
     public RobotContainer(boolean isReal) {
         if (isReal) {
@@ -81,22 +77,30 @@ public class RobotContainer {
                         drivetrainSubsystem.voltagesArcadeCommand(
                                 () -> -controller.getLeftY(),
                                 () -> -controller.getRightX()));
-                 controller.a().whileTrue(new RunFeeder(shootersub, 12)); // A to run feeder motors
-                 controller.leftTrigger(0.5).whileTrue(new RunShooter(shootersub, 12)); // Left trigger to shoot notes
-                 controller.b().whileTrue(runIntake);  //When on B runs shooter and feeder motor backwards(Intake motor)
+                controller.a().whileTrue(new RunFeeder(shootersub, Constants.maxFeederSpeed)); // A to run feeder motors
+                controller.leftTrigger(0.5).whileTrue(new RunShooter(shootersub, Constants.maxShooterSpeed)); // Left
+                                                                                                              // trigger
+                                                                                                              // to
+                                                                                                              // shoot
+                                                                                                              // notes
+                controller.b().whileTrue(runIntake); // When on B runs shooter and feeder motor backwards(Intake motor)
                 break;
 
             case Monty:
                 montySubsytem.setDefaultCommand(
                         montySubsytem.ArcadeDrive(
                                 () -> -controller.getLeftY(),
-                                () -> -controller.getRightX()));
-                controller.x().whileTrue(new RunIntake(m_intake, 1));    //Run intake motors
-                controller.b().toggleOnTrue(new SetIntakeState(m_intake, true));  //Move the intake down
-                controller.rightTrigger(0.5).whileTrue(new RunFeed(new m_ShooterSub(), 1));   //shoot the ball after flyweels are spunt
-                controller.y().toggleOnTrue(new RunLaunch(new m_ShooterSub(), 1));  //toggles the flyweels    
-                
-                controller.leftBumper().whileTrue(runBackward);
+                                () -> controller.getRightX()));
+                controller.x().whileTrue(new RunIntake(m_intake, 1)); // Run intake motors
+                controller.b().toggleOnTrue(new SetIntakeState(m_intake, true)); // Move the intake down
+                controller.rightTrigger(0.5).whileTrue(new RunFeed(new m_ShooterSub(), 1)); // shoot the ball after
+                                                                                            // flyweels are spunt
+                controller.y().toggleOnTrue(new RunLaunch(new m_ShooterSub(), 1)); // toggles the flyweels
+
+                // Shoots the ball backwards if it is stuck
+                controller.leftBumper().whileTrue(new RunIntake(m_intake, -1));
+                controller.a().whileTrue(new RunFeed(new m_ShooterSub(), -1));
+
                 break;
             default:
 
@@ -104,10 +108,10 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        
-        NamedCommands.registerCommand("RunShooter", new RunShooter(shootersub, RobotController.getInputVoltage()));
-        NamedCommands.registerCommand("RunFeeder", new RunFeeder(shootersub, RobotController.getInputVoltage()));
-        
-        return new PathPlannerAuto("Soham");
+
+        NamedCommands.registerCommand("RunShooter", new RunLaunch(new m_ShooterSub(), 1));
+        NamedCommands.registerCommand("RunFeed", new RunFeed(new m_ShooterSub(), 1));
+
+        return new PathPlannerAuto("Auto_1");
     }
 }

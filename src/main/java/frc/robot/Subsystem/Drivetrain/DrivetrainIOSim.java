@@ -39,9 +39,9 @@ public class DrivetrainIOSim implements DrivetrainIO {
 
     @Override
     public void setVolts(double left, double right) {
-        physicsSim.setInputs(left, right);
         leftVolts = left;
         rightVolts = right;
+        physicsSim.setInputs(left, right);
         
     }
 }

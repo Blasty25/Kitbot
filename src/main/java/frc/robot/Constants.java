@@ -30,8 +30,8 @@ public class Constants {
 
 
         // Other Monty Constants
-        public static final double maxLeftSpeed = 2 * Math.PI;
-        public static final double maxRightSpeed = 2 * Math.PI;
+        public static final double maxLeftSpeed = Units.radiansPerSecondToRotationsPerMinute(2 * Math.PI);  
+        public static final double maxRightSpeed = Units.radiansPerSecondToRotationsPerMinute(2 * Math.PI);
 
     }
 
@@ -49,21 +49,25 @@ public class Constants {
 
         public static final int FeedRollerID = 23;
 
-        public static final double maxIntakeSpeed = 1;
-        public static final double maxLaunchSpeed = 1;
+        public static final double maxIntakeSpeed = 0.6;
+        public static final double maxLaunchSpeed = 0.6;
 
-        public static final double maxFeedSpeed = 1;
+        public static final double maxFeedSpeed = 0.6;
 
         public static final int intakeSolenoid = 15;
         public static final int feedersolenoid = 7;
         
-		public static final double gearRatio = 12;
+		public static final double gearRatio = 34;  //34
+
+        public static final double maxRPM = 100;
     }
 
 ////////////////KITBOT/////////////////////////////////////////
-    // Sparks                                           ///////
-    public static final int shooterID = 11; //KITBOT    //////
+    // Sparks                                            //////
+    public static final int shooterID = 11; //KITBOT    ///////
     public static final int feederID = 12;             ///////
+    public static final int maxFeederSpeed = 12;       ///////
+    public static final int maxShooterSpeed = 12;       //////
 //////////////////////////////////////////////////////////////
 
     public static final boolean isReplay = true;
