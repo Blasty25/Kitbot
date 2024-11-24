@@ -15,6 +15,7 @@ import frc.robot.Constants.RobotType;
 import frc.robot.Monty.DrivetrainMonty.DrivetrainIOMonty;
 import frc.robot.Monty.DrivetrainMonty.MontyIOSim;
 import frc.robot.Monty.DrivetrainMonty.MontySubsytem;
+import frc.robot.Monty.Hood_Command.HoodState;
 import frc.robot.Monty.Intake.Intake;
 import frc.robot.Monty.Intake.Commands.RunIntake;
 import frc.robot.Monty.Intake.Commands.SetIntakeState;
@@ -39,6 +40,7 @@ public class RobotContainer {
     MontySubsytem montySubsytem;
     ShooterSub shootersub;
     Intake m_intake;
+    m_ShooterSub m_ShooterSub;
 
     // Multiple commands at once
     ParallelCommandGroup runIntake = new ParallelCommandGroup(new RunFeeder(shootersub, -1),
@@ -54,6 +56,7 @@ public class RobotContainer {
             if (Constants.type == RobotType.Monty) {
                 montySubsytem = new MontySubsytem(new DrivetrainIOMonty());
                 m_intake = new Intake(hub);
+                m_ShooterSub = new m_ShooterSub(hub);
             }
         } else {
             if (Constants.type == RobotType.Kitbot) {
@@ -63,6 +66,7 @@ public class RobotContainer {
 
             if (Constants.type == RobotType.Monty) {
                 montySubsytem = new MontySubsytem(new MontyIOSim());
+                m_ShooterSub = new m_ShooterSub(hub);
             }
         }
 
@@ -79,10 +83,6 @@ public class RobotContainer {
                                 () -> -controller.getRightX()));
                 controller.a().whileTrue(new RunFeeder(shootersub, Constants.maxFeederSpeed)); // A to run feeder motors
                 controller.leftTrigger(0.5).whileTrue(new RunShooter(shootersub, Constants.maxShooterSpeed)); // Left
-                                                                                                              // trigger
-                                                                                                              // to
-                                                                                                              // shoot
-                                                                                                              // notes
                 controller.b().whileTrue(runIntake); // When on B runs shooter and feeder motor backwards(Intake motor)
                 break;
 
@@ -93,13 +93,13 @@ public class RobotContainer {
                                 () -> controller.getRightX()));
                 controller.x().whileTrue(new RunIntake(m_intake, 1)); // Run intake motors
                 controller.b().toggleOnTrue(new SetIntakeState(m_intake, true)); // Move the intake down
-                controller.rightTrigger(0.5).whileTrue(new RunFeed(new m_ShooterSub(), 1)); // shoot the ball after
-                                                                                            // flyweels are spunt
-                controller.y().toggleOnTrue(new RunLaunch(new m_ShooterSub(), 1)); // toggles the flyweels
+                controller.rightTrigger(0.5).whileTrue(new RunFeed(m_ShooterSub, 1)); // shoot the ball after
+                controller.y().toggleOnTrue(new RunLaunch(m_ShooterSub, 1)); // toggles the flyweels
+                controller.povUp().toggleOnTrue(new HoodState(m_ShooterSub));  //Hood state 
 
                 // Shoots the ball backwards if it is stuck
                 controller.leftBumper().whileTrue(new RunIntake(m_intake, -1));
-                controller.a().whileTrue(new RunFeed(new m_ShooterSub(), -1));
+                controller.leftBumper().whileTrue(new RunFeed(m_ShooterSub, -1));
 
                 break;
             default:
@@ -109,8 +109,8 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
 
-        NamedCommands.registerCommand("RunShooter", new RunLaunch(new m_ShooterSub(), 1));
-        NamedCommands.registerCommand("RunFeed", new RunFeed(new m_ShooterSub(), 1));
+        NamedCommands.registerCommand("RunShooter", new RunLaunch(m_ShooterSub, 1));
+        NamedCommands.registerCommand("RunFeed", new RunFeed(m_ShooterSub, 1));
 
         return new PathPlannerAuto("Auto_1");
     }
