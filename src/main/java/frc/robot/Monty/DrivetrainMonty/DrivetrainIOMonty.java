@@ -1,10 +1,12 @@
 package frc.robot.Monty.DrivetrainMonty;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
@@ -15,6 +17,7 @@ public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstar
     public CANSparkMax frontRight = new CANSparkMax(DriveConstants.fR, MotorType.kBrushless);
     public CANSparkMax backLeft = new CANSparkMax(DriveConstants.bL, MotorType.kBrushless);
     public CANSparkMax backRight = new CANSparkMax(DriveConstants.bR, MotorType.kBrushless);
+
 
     public DrivetrainIOMonty() {
         frontLeft.restoreFactoryDefaults();
@@ -50,8 +53,8 @@ public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstar
     }
 
     public void arcadeDrive(double left, double right) {
-        frontLeft.setVoltage(left);
-        frontRight.setVoltage(right);
+        frontLeft.set(left);
+        frontRight.set(right);
     }
 
     @Override
