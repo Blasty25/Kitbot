@@ -4,6 +4,7 @@
 
 package frc.robot.Subsystem.Shooter;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
@@ -18,12 +19,12 @@ public class ShooterSub extends SubsystemBase {
 
 
   public void setFeederOutput(double volts){
-    io.setFeederVolts(volts);
+    io.setFeederVolts(volts / RobotController.getInputVoltage());
   }
 
 
   public void setShooterOutput(double volts) {
-    io.setShooterVolts(volts);
+    io.setShooterVolts(volts / RobotController.getInputVoltage());
   }
 
 

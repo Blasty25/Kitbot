@@ -8,7 +8,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.DriveConstants;
 
 public class ShooterIONeo implements ShooterIO{
     CANSparkMax Shooter;
@@ -32,11 +35,13 @@ public class ShooterIONeo implements ShooterIO{
     }
     @Override
     public void setFeederVolts(double volts) {
-        Feeder.setVoltage(volts);
+        Feeder.set(volts * Constants.maxFeederSpeed / RobotController.getInputVoltage());
+        // Feeder.setVoltage(volts);
     }
     @Override
     public void setShooterVolts(double volts) {
-        Shooter.setVoltage(volts);
+        Shooter.set(volts * Constants.maxShooterSpeed / RobotController.getInputVoltage());
+        // Shooter.setVoltage(volts);
     }
     @Override
     public void getData(ShooterData data) {

@@ -58,11 +58,11 @@ public class Constants {
     }
 
     //////////////// KITBOT/////////////////////////////////////////
-    // Sparks //////
-    public static final int shooterID = 11; // KITBOT ///////
-    public static final int feederID = 12; ///////
-    public static final int maxFeederSpeed = 12; ///////
-    public static final int maxShooterSpeed = 12; //////
+    // Sparks                                                 ////// 
+    public static final int shooterID = 11;                  ///////
+    public static final int feederID = 12;                  ///////   Change if this doesn't work
+    public static final int maxFeederSpeed = 1;//Set from 0-1///////
+    public static final int maxShooterSpeed = 1; //Set from 0-1//////   
     //////////////////////////////////////////////////////////////
 
     public static final boolean isReplay = true;
@@ -72,5 +72,5 @@ public class Constants {
         Kitbot;
     }
 
-    public static final RobotType type = RobotType.Monty;
+    public static final RobotType type = RobotType.Kitbot;
 }

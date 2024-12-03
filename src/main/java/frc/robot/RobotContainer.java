@@ -39,18 +39,18 @@ public class RobotContainer {
     DrivetrainSubsystem drivetrainSubsystem;
     MontySubsytem montySubsytem;
     MontyIOSim montyIOSim;
-    ShooterSub shootersub;
+    ShooterSub shooterSub;
     Intake m_intake;
     m_ShooterSub m_ShooterSub;
 
     // Multiple commands at once
-    ParallelCommandGroup runIntake = new ParallelCommandGroup(new RunFeeder(shootersub, -1),
-            new RunShooter(shootersub, -1)); // Run Kitbot intake
+    ParallelCommandGroup runIntake = new ParallelCommandGroup(new RunFeeder(shooterSub, -1),
+            new RunShooter(shooterSub, -1)); // Run Kitbot intake
 
     public RobotContainer(boolean isReal) {
         if (isReal) {
             if (Constants.type == RobotType.Kitbot) {
-                shootersub = new ShooterSub(new ShooterIONeo());
+                shooterSub = new ShooterSub(new ShooterIONeo());
                 drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOTalonSRX());
             }
 
@@ -62,7 +62,7 @@ public class RobotContainer {
             }
         } else {
             if (Constants.type == RobotType.Kitbot) {
-                shootersub = new ShooterSub(new ShooterIOSim());
+                shooterSub = new ShooterSub(new ShooterIOSim());
                 drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOSim());
             }
 
@@ -84,10 +84,10 @@ public class RobotContainer {
                         drivetrainSubsystem.voltagesArcadeCommand(
                                 () -> -controller.getLeftY(),
                                 () -> controller.getRightX()));  //For real Implemntation make sure to negate this
-                controller.a().whileTrue(new RunFeeder(shootersub, Constants.maxFeederSpeed)); // A to run feeder motors
-                controller.rightTrigger(0.5).whileTrue(new RunShooter(shootersub, Constants.maxShooterSpeed)); // Left
-                controller.b().whileTrue(new RunFeeder(shootersub, -2));
-                controller.b().whileTrue(new RunShooter(shootersub, -2)); // When on B runs shooter and feeder motor backwards(Intake motor)
+                controller.a().whileTrue(new RunFeeder(shooterSub, Constants.maxFeederSpeed)); // A to run feeder motors
+                controller.rightTrigger(0.5).whileTrue(new RunShooter(shooterSub, Constants.maxShooterSpeed)); // Left
+                controller.b().whileTrue(new RunFeeder(shooterSub, -3));
+                controller.b().whileTrue(new RunShooter(shooterSub, -3)); // When on B runs shooter and feeder motor backwards(Intake motor)
                 break;
 
             case Monty:
