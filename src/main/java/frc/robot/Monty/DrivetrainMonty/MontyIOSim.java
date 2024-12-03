@@ -1,5 +1,6 @@
 package frc.robot.Monty.DrivetrainMonty;
 
+
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
@@ -32,7 +33,7 @@ public class MontyIOSim implements DrivetrainIOstart {
 
     @Override
     public void arcadeDrive(double left, double right) {
-        left_Motor.setState(left_Motor.getAngularPositionRad(), left *= DriveConstants.maxLeftSpeed);
-        right_Motor.setState(right_Motor.getAngularPositionRad(), right *= DriveConstants.maxRightSpeed);
+        left_Motor.setState(left_Motor.getAngularPositionRad(), left * DriveConstants.driveSpeed);
+        right_Motor.setState(right_Motor.getAngularPositionRad(), right * DriveConstants.driveSpeed);
     }
 }

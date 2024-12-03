@@ -29,7 +29,7 @@ public class MontySubsytem extends SubsystemBase {
     DrivetrainIOInputsAutoLogged inputs = new DrivetrainIOInputsAutoLogged();
 
     DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0,
-            new Pose2d(2, 7, new Rotation2d()));
+            new Pose2d(0.66, 4.39, new Rotation2d()));
 
     DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(DriveConstants.m_RobotWidth);
 
@@ -50,10 +50,11 @@ public class MontySubsytem extends SubsystemBase {
     }
 
     public void arcadeDrive(double speed, double rotation) { // Real Implemntation
-        speed = MathUtil.applyDeadband(speed, 0.1);
-        rotation = MathUtil.applyDeadband(rotation, 0.1);
+        speed = MathUtil.applyDeadband(speed, 0.15);
+        rotation = MathUtil.applyDeadband(rotation, 0.15);
         double left = speed + rotation;
         double right = speed - rotation;
+
 
         io.arcadeDrive(left, right);
     }
@@ -63,10 +64,9 @@ public class MontySubsytem extends SubsystemBase {
         inputs.robotPose = odometry.update(
                 odometry.getPoseMeters().getRotation()
                         // Use differential drive kinematics to find the rotation rate based on the
-                        // wheel speeds and distance between wheels
                         .plus(Rotation2d
                                 .fromRadians((inputs.leftVelocityMetersPerSecond - inputs.rightVelocityMetersPerSecond)
-                                        * 0.020 / Units.inchesToMeters(22))),  //26
+                                        * 0.020 / Units.inchesToMeters(26))),  //26
                 inputs.leftPositionMeters, inputs.rightPositionMeters);
         io.updateInputs(inputs);
         Logger.processInputs("Drivetrain", inputs);

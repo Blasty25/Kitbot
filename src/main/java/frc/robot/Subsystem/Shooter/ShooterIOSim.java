@@ -4,10 +4,9 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import frc.robot.Constants;
 public class ShooterIOSim implements ShooterIO {
-
+    
     TalonFX ShooterM;
     TalonFX FeederM;
-
 
     VoltageOut ShooterV;
     VoltageOut FeederV;
@@ -33,7 +32,7 @@ public class ShooterIOSim implements ShooterIO {
     public void setFeederVolts(double volts) {
         FeederM.setControl(FeederV.withOutput(volts));
     }
-
+            
     @Override
     public void setShooterVolts(double volts) {
         ShooterM.setControl(ShooterV.withOutput(volts));

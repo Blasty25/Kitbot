@@ -38,6 +38,7 @@ public class RobotContainer {
     CommandXboxController controller = new CommandXboxController(0);
     DrivetrainSubsystem drivetrainSubsystem;
     MontySubsytem montySubsytem;
+    MontyIOSim montyIOSim;
     ShooterSub shootersub;
     Intake m_intake;
     m_ShooterSub m_ShooterSub;
@@ -57,6 +58,7 @@ public class RobotContainer {
                 montySubsytem = new MontySubsytem(new DrivetrainIOMonty());
                 m_intake = new Intake(hub);
                 m_ShooterSub = new m_ShooterSub(hub);
+                montyIOSim = new MontyIOSim();
             }
         } else {
             if (Constants.type == RobotType.Kitbot) {
@@ -67,6 +69,7 @@ public class RobotContainer {
             if (Constants.type == RobotType.Monty) {
                 montySubsytem = new MontySubsytem(new MontyIOSim());
                 m_ShooterSub = new m_ShooterSub(hub);
+                montyIOSim = new MontyIOSim();
             }
         }
 
@@ -80,17 +83,18 @@ public class RobotContainer {
                 drivetrainSubsystem.setDefaultCommand(
                         drivetrainSubsystem.voltagesArcadeCommand(
                                 () -> -controller.getLeftY(),
-                                () -> -controller.getRightX()));
+                                () -> controller.getRightX()));  //For real Implemntation make sure to negate this
                 controller.a().whileTrue(new RunFeeder(shootersub, Constants.maxFeederSpeed)); // A to run feeder motors
-                controller.leftTrigger(0.5).whileTrue(new RunShooter(shootersub, Constants.maxShooterSpeed)); // Left
-                controller.b().whileTrue(runIntake); // When on B runs shooter and feeder motor backwards(Intake motor)
+                controller.rightTrigger(0.5).whileTrue(new RunShooter(shootersub, Constants.maxShooterSpeed)); // Left
+                controller.b().whileTrue(new RunFeeder(shootersub, -2));
+                controller.b().whileTrue(new RunShooter(shootersub, -2)); // When on B runs shooter and feeder motor backwards(Intake motor)
                 break;
 
             case Monty:
                 montySubsytem.setDefaultCommand(
                         montySubsytem.ArcadeDrive(
                                 () -> -controller.getLeftY(),
-                                () -> controller.getRightX()));
+                                () -> -controller.getRightX()));  //For real implemntation make sure to invert this
                 controller.x().whileTrue(new RunIntake(m_intake, 1)); // Run intake motors
                 controller.b().toggleOnTrue(new SetIntakeState(m_intake, true)); // Move the intake down
                 controller.rightTrigger(0.5).whileTrue(new RunFeed(m_ShooterSub, 1)); // shoot the ball after
@@ -100,7 +104,6 @@ public class RobotContainer {
                 // Shoots the ball backwards if it is stuck
                 controller.leftBumper().whileTrue(new RunIntake(m_intake, -1));
                 controller.leftBumper().whileTrue(new RunFeed(m_ShooterSub, -1));
-
                 break;
             default:
 

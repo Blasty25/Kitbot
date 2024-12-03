@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotGearing;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotMotor;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotWheelSize;
+import frc.robot.Constants.DriveConstants;
 
 public class DrivetrainIOSim implements DrivetrainIO {
 
@@ -41,7 +42,6 @@ public class DrivetrainIOSim implements DrivetrainIO {
     public void setVolts(double left, double right) {
         leftVolts = left;
         rightVolts = right;
-        physicsSim.setInputs(left, right);
-        
+        physicsSim.setInputs(left * DriveConstants.maxSpeed, right * DriveConstants.maxSpeed);
     }
 }

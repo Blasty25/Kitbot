@@ -16,23 +16,20 @@ public class Constants {
         public static final int frontRight = 2;
 
         // Monty SparkMaxes
-        
+
         public static final int bL = 3;
         public static final int bR = 4;
         public static final int fL = 1;
         public static final int fR = 2;
 
-        
         public static final double m_RobotWidth = Units.inchesToMeters(15);
 
-
-
         // Other Monty Constants
-        public static final double maxLeftSpeed = Units.radiansPerSecondToRotationsPerMinute(2 * Math.PI);  
-        public static final double maxRightSpeed = Units.radiansPerSecondToRotationsPerMinute(2 * Math.PI);
+        public static final double maxSpeed = 1;
+
+        public static final double driveSpeed = maxSpeed * (Units.radiansPerSecondToRotationsPerMinute(2 * Math.PI));
 
     }
-
 
     public class MontyIntake {
         public static final int frontRoller = 11;
@@ -54,19 +51,19 @@ public class Constants {
 
         public static final int intakeSolenoid = 15;
         public static final int feedersolenoid = 7;
-        
-		public static final double gearRatio = 34;  //34
+
+        public static final double gearRatio = 34; // 34
 
         public static final double maxRPM = 100;
     }
 
-////////////////KITBOT/////////////////////////////////////////
-    // Sparks                                            //////
-    public static final int shooterID = 11; //KITBOT    ///////
-    public static final int feederID = 12;             ///////
-    public static final int maxFeederSpeed = 12;       ///////
-    public static final int maxShooterSpeed = 12;       //////
-//////////////////////////////////////////////////////////////
+    //////////////// KITBOT/////////////////////////////////////////
+    // Sparks //////
+    public static final int shooterID = 11; // KITBOT ///////
+    public static final int feederID = 12; ///////
+    public static final int maxFeederSpeed = 12; ///////
+    public static final int maxShooterSpeed = 12; //////
+    //////////////////////////////////////////////////////////////
 
     public static final boolean isReplay = true;
 
@@ -76,5 +73,4 @@ public class Constants {
     }
 
     public static final RobotType type = RobotType.Monty;
-  
 }

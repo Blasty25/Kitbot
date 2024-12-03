@@ -11,6 +11,7 @@ public class HoodState extends Command {
 
   public final m_ShooterSub shooterSub;
 
+
   /** Creates a new HoodState. */
   public HoodState(m_ShooterSub hood) {
     this.shooterSub = hood;
