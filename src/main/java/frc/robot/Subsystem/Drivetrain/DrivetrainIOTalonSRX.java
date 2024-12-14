@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.RobotController;
 
 import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 
 public class DrivetrainIOTalonSRX implements DrivetrainIO {
 
@@ -38,8 +39,10 @@ public class DrivetrainIOTalonSRX implements DrivetrainIO {
 
     @Override
     public void setVolts(double left, double right) {
-        frontLeft.set(ControlMode.PercentOutput, left / RobotController.getInputVoltage());
-        frontRight.set(ControlMode.PercentOutput, right / RobotController.getInputVoltage());
+        double drive = left * DriveConstants.maxSpeed;
+        double steer = right * DriveConstants.maxSpeed;
+        frontLeft.set(ControlMode.PercentOutput, drive / RobotController.getInputVoltage());
+        frontRight.set(ControlMode.PercentOutput, steer / RobotController.getInputVoltage());
     }
 
     @Override

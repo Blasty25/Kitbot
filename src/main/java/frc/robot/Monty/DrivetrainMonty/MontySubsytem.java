@@ -29,7 +29,7 @@ public class MontySubsytem extends SubsystemBase {
     DrivetrainIOInputsAutoLogged inputs = new DrivetrainIOInputsAutoLogged();
 
     DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0,
-            new Pose2d(0.66, 4.39, new Rotation2d()));
+            new Pose2d(3.57, 5.60, new Rotation2d()));
 
     DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(DriveConstants.m_RobotWidth);
 

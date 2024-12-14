@@ -4,6 +4,9 @@
 
 package frc.robot.Subsystem.Shooter;
 
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.inputs.LoggableInputs;
+
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -12,6 +15,7 @@ public class ShooterSub extends SubsystemBase {
   /** Creates a new ShooterSub. */
 
  ShooterIO io;
+ ShooterDataAutoLogged inputs = new ShooterDataAutoLogged();
 
   public ShooterSub(ShooterIO shoot) {
     io = shoot;
@@ -19,18 +23,21 @@ public class ShooterSub extends SubsystemBase {
 
 
   public void setFeederOutput(double volts){
-    io.setFeederVolts(volts / RobotController.getInputVoltage());
+    io.setFeederVolts(volts);
+  }
+
+  public void getFeederVolts(double volts){
   }
 
 
   public void setShooterOutput(double volts) {
-    io.setShooterVolts(volts / RobotController.getInputVoltage());
+    io.setShooterVolts(volts);
   }
 
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    Logger.processInputs("Kitbot Shooter", inputs);
   }
 
 

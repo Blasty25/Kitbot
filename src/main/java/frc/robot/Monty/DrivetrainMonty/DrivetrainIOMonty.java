@@ -50,8 +50,8 @@ public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstar
     }
 
     public void arcadeDrive(double left, double right) {
-        frontLeft.set(left);
-        frontRight.set(right);
+        frontLeft.set(left * DriveConstants.maxSpeed);
+        frontRight.set(right * DriveConstants.maxSpeed);
     }
 
     @Override

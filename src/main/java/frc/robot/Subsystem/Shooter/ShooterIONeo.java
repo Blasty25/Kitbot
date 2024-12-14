@@ -4,18 +4,21 @@
 
 package frc.robot.Subsystem.Shooter;
 
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.inputs.LoggableInputs;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.Constants.DriveConstants;
 
 public class ShooterIONeo implements ShooterIO{
     CANSparkMax Shooter;
     CANSparkMax Feeder;
+
+    LoggableInputs inputs;
     
     public ShooterIONeo() {
         Shooter = new CANSparkMax(Constants.shooterID, MotorType.kBrushless);
@@ -32,19 +35,22 @@ public class ShooterIONeo implements ShooterIO{
 
         Shooter.burnFlash();
         Feeder.burnFlash();
+
     }
+
     @Override
     public void setFeederVolts(double volts) {
-        Feeder.set(volts * Constants.maxFeederSpeed / RobotController.getInputVoltage());
-        // Feeder.setVoltage(volts);
+        Feeder.setVoltage(volts);
     }
     @Override
     public void setShooterVolts(double volts) {
-        Shooter.set(volts * Constants.maxShooterSpeed / RobotController.getInputVoltage());
-        // Shooter.setVoltage(volts);
-    }
-    @Override
-    public void getData(ShooterData data) {
+        Shooter.setVoltage(volts);
     }
 
+    @Override
+    public void updateInputs(ShooterData shooterData){
+        shooterData.FeederVolts = Feeder.getAppliedOutput();
+        shooterData.ShooterVolts = Shooter.getAppliedOutput();
+    }
+    
 }

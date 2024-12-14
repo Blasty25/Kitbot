@@ -25,7 +25,7 @@ public class Constants {
         public static final double m_RobotWidth = Units.inchesToMeters(15);
 
         // Other Monty Constants
-        public static final double maxSpeed = 1;
+        public static final double maxSpeed = 0.1;
 
         public static final double driveSpeed = maxSpeed * (Units.radiansPerSecondToRotationsPerMinute(2 * Math.PI));
 
@@ -44,10 +44,10 @@ public class Constants {
 
         public static final int FeedRollerID = 23;
 
-        public static final double maxIntakeSpeed = 0.6;
-        public static final double maxLaunchSpeed = 0.6;
+        public static final double maxIntakeSpeed = 0.7;
+        public static final double maxLaunchSpeed = 0.7;
 
-        public static final double maxFeedSpeed = 0.6;
+        public static final double maxFeedSpeed = 0.7;
 
         public static final int intakeSolenoid = 15;
         public static final int feedersolenoid = 7;
@@ -61,11 +61,11 @@ public class Constants {
     // Sparks                                                 ////// 
     public static final int shooterID = 11;                  ///////
     public static final int feederID = 12;                  ///////   Change if this doesn't work
-    public static final int maxFeederSpeed = 1;//Set from 0-1///////
-    public static final int maxShooterSpeed = 1; //Set from 0-1//////   
+    public static final int maxFeederSpeed = 65;//Set from 0-1///////
+    public static final int maxShooterSpeed = 65; //Set from 0-1//////   
     //////////////////////////////////////////////////////////////
 
-    public static final boolean isReplay = true;
+    public static final boolean isReplay = false;
 
     public enum RobotType {
         Monty,

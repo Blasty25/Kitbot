@@ -1,41 +1,63 @@
 package frc.robot.Subsystem.Shooter;
 
+import org.littletonrobotics.junction.Logger;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix6.controls.VoltageOut;
-import com.ctre.phoenix6.hardware.TalonFX;
+
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotGearing;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotMotor;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotWheelSize;
 import frc.robot.Constants;
+
 public class ShooterIOSim implements ShooterIO {
-    
-    TalonFX ShooterM;
-    TalonFX FeederM;
+    TalonSRX ShooterM;
+    TalonSRX FeederM;
 
     VoltageOut ShooterV;
     VoltageOut FeederV;
 
-    public ShooterIOSim(){
+        DifferentialDrivetrainSim physicsSim = DifferentialDrivetrainSim.createKitbotSim(
+            KitbotMotor.kDoubleNEOPerSide,
+            KitbotGearing.k8p45,
+            KitbotWheelSize.kSixInch,
+            null);
 
-        ShooterM = new TalonFX(Constants.shooterID);
-        FeederM = new TalonFX(Constants.feederID);
+    public ShooterIOSim() {
+        
+        ShooterM = new TalonSRX(Constants.shooterID);
+        FeederM = new TalonSRX(Constants.feederID);
 
         ShooterM.setInverted(true);
         FeederM.setInverted(true);
-
-        ShooterV = new VoltageOut(0.0);
-        FeederV = new VoltageOut(0.0);
     }
 
-    
     @Override
-    public void getData(ShooterData data) {
+    public void updateInputs(ShooterData shooterData) {
+
+        physicsSim.update(0.020);
+        shooterData.FeederOut = FeederM.getMotorOutputVoltage();
+        shooterData.ShooterOut = ShooterM.getMotorOutputVoltage();
+
+        shooterData.feederCurrent = FeederM.getSupplyCurrent();
+        shooterData.shooterCurrent = ShooterM.getSupplyCurrent();
+
+        shooterData.feederTemp = FeederM.getTemperature();
+        shooterData.shooterTem = ShooterM.getTemperature();
     }
 
     @Override
     public void setFeederVolts(double volts) {
-        FeederM.setControl(FeederV.withOutput(volts));
+        FeederM.set(ControlMode.PercentOutput, volts);
+        Logger.recordOutput("Feed Volts", volts);
     }
-            
+
     @Override
     public void setShooterVolts(double volts) {
-        ShooterM.setControl(ShooterV.withOutput(volts));
+        ShooterM.set(ControlMode.PercentOutput, volts);
+        Logger.recordOutput("Shooter Volts", volts);
     }
-    
+
 }
