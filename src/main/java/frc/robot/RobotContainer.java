@@ -72,17 +72,17 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        switch (Constants.type) {
+        switch (Constants.type) {   //2 JAVA PROJECTS IN ONE AND IT WORKS!!! 
 
             case Kitbot:
                 drivetrainSubsystem.setDefaultCommand(
                         drivetrainSubsystem.voltagesArcadeCommand(
                                 () -> -controller.getLeftY(),
                                 () -> -controller.getRightX()));  //For real Implemntation make sure to negate this
-                controller.a().whileTrue(new RunFeeder(shooterSub, Constants.maxFeederSpeed)); // A to run feeder motors
-                controller.rightTrigger(0.5).whileTrue(new RunShooter(shooterSub, Constants.maxShooterSpeed)); // Left
-                controller.b().whileTrue(new RunFeeder(shooterSub, -22));
-                controller.b().whileTrue(new RunShooter(shooterSub, -22)); // When on B runs shooter and feeder motor backwards(Intake motor)
+                controller.a().whileTrue(new RunFeeder(shooterSub, 12)); // A to run feeder motors
+                controller.rightTrigger(0.5).whileTrue(new RunShooter(shooterSub, 12)); // Left
+                controller.b().whileTrue(new RunFeeder(shooterSub, -12));
+                controller.b().whileTrue(new RunShooter(shooterSub, -12)); // When on B runs shooter and feeder motor backwards(Intake motor)
                 break;
 
             case Monty:
@@ -101,7 +101,6 @@ public class RobotContainer {
                 controller.leftBumper().whileTrue(new RunFeed(m_ShooterSub, -1));
                 break;
             default:
-
         }
     }
 
@@ -112,4 +111,5 @@ public class RobotContainer {
 
         return new PathPlannerAuto("Auto_1");
     }
-}
+} 
+//Auto GO VROOM VROOM

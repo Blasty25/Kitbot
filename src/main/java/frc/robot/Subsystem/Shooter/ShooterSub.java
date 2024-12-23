@@ -4,17 +4,21 @@
 
 package frc.robot.Subsystem.Shooter;
 
+import java.io.Console;
+
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.inputs.LoggableInputs;
 
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 
 public class ShooterSub extends SubsystemBase {
   /** Creates a new ShooterSub. */
 
  ShooterIO io;
+ ShooterIOSim sim;
  ShooterDataAutoLogged inputs = new ShooterDataAutoLogged();
 
   public ShooterSub(ShooterIO shoot) {
@@ -23,7 +27,7 @@ public class ShooterSub extends SubsystemBase {
 
 
   public void setFeederOutput(double volts){
-    io.setFeederVolts(volts);
+    io.setFeederVolts(volts * Constants.maxFeederSpeed);
   }
 
   public void getFeederVolts(double volts){
@@ -31,7 +35,7 @@ public class ShooterSub extends SubsystemBase {
 
 
   public void setShooterOutput(double volts) {
-    io.setShooterVolts(volts);
+    io.setShooterVolts(volts * Constants.maxShooterSpeed);
   }
 
 

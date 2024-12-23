@@ -1,8 +1,10 @@
 //YAP YAP YAP YIPPE
+//YAP YAP YAP YIPPEE V2
 
 package frc.robot;
 
 import edu.wpi.first.math.util.Units;
+import frc.robot.Monty.DrivetrainMonty.MontySubsytem;
 
 /** Add your docs here. */
 public class Constants {
@@ -25,7 +27,7 @@ public class Constants {
         public static final double m_RobotWidth = Units.inchesToMeters(15);
 
         // Other Monty Constants
-        public static final double maxSpeed = 0.1;
+        public static final double maxSpeed = 0.45;
 
         public static final double driveSpeed = maxSpeed * (Units.radiansPerSecondToRotationsPerMinute(2 * Math.PI));
 
@@ -44,10 +46,10 @@ public class Constants {
 
         public static final int FeedRollerID = 23;
 
-        public static final double maxIntakeSpeed = 0.7;
-        public static final double maxLaunchSpeed = 0.7;
+        public static final double maxIntakeSpeed = 1;
+        public static final double maxLaunchSpeed = 1;
 
-        public static final double maxFeedSpeed = 0.7;
+        public static final double maxFeedSpeed = 1;
 
         public static final int intakeSolenoid = 15;
         public static final int feedersolenoid = 7;
@@ -61,8 +63,8 @@ public class Constants {
     // Sparks                                                 ////// 
     public static final int shooterID = 11;                  ///////
     public static final int feederID = 12;                  ///////   Change if this doesn't work
-    public static final int maxFeederSpeed = 65;//Set from 0-1///////
-    public static final int maxShooterSpeed = 65; //Set from 0-1//////   
+    public static final double maxFeederSpeed = 1;//Set from 0-1///////
+    public static final double maxShooterSpeed = 1; //Set from 0-1//////   
     //////////////////////////////////////////////////////////////
 
     public static final boolean isReplay = false;
@@ -72,5 +74,7 @@ public class Constants {
         Kitbot;
     }
 
-    public static final RobotType type = RobotType.Kitbot;
-}
+    public static final RobotType type = RobotType.Monty; 
+
+} 
+//Me just adding fun comments all around the my code! go to Monty Subsystem to read more
