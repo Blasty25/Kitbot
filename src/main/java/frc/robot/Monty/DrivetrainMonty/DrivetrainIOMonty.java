@@ -1,47 +1,41 @@
 package frc.robot.Monty.DrivetrainMonty;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
 
 public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstart {
 
-    public CANSparkMax frontLeft = new CANSparkMax(DriveConstants.fL, MotorType.kBrushless);
-    public CANSparkMax frontRight = new CANSparkMax(DriveConstants.fR, MotorType.kBrushless);
-    public CANSparkMax backLeft = new CANSparkMax(DriveConstants.bL, MotorType.kBrushless);
-    public CANSparkMax backRight = new CANSparkMax(DriveConstants.bR, MotorType.kBrushless);
+    public SparkMax frontLeft = new SparkMax(DriveConstants.fL, MotorType.kBrushless);
+    public SparkMax frontRight = new SparkMax(DriveConstants.fR, MotorType.kBrushless);
+    public SparkMax backLeft = new SparkMax(DriveConstants.bL, MotorType.kBrushless);
+    public SparkMax backRight = new SparkMax(DriveConstants.bR, MotorType.kBrushless);
 
 
     public DrivetrainIOMonty() {
-        frontLeft.restoreFactoryDefaults();
-        frontLeft.setIdleMode(IdleMode.kBrake);
-        frontLeft.setSmartCurrentLimit(50);
-        frontLeft.setInverted(false);
-        frontLeft.burnFlash();
+        SparkMaxConfig config = new SparkMaxConfig();
 
-        backLeft.restoreFactoryDefaults();
-        backLeft.setIdleMode(IdleMode.kBrake);
-        backLeft.setSmartCurrentLimit(50);
-        backLeft.setInverted(false);
-        backLeft.follow(frontLeft);
-        backLeft.burnFlash();
+        config.idleMode(IdleMode.kBrake);
+        config.smartCurrentLimit(50);
+        config.inverted(true);
 
-        frontRight.restoreFactoryDefaults();
-        frontRight.setIdleMode(IdleMode.kBrake);
-        frontRight.setSmartCurrentLimit(50);
-        frontRight.setInverted(false);
-        frontRight.burnFlash();
+        frontLeft.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        frontRight.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        backRight.restoreFactoryDefaults();
-        backRight.setIdleMode(IdleMode.kBrake);
-        backRight.setSmartCurrentLimit(50);
-        backRight.setInverted(false);
-        backRight.follow(frontRight);
-        backRight.burnFlash();
+        config.follow(frontLeft, true);
+
+        backLeft.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        config.follow(frontRight, true);
+
+        backRight.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         SmartDashboard.putNumber("FrontLeftId", frontLeft.getDeviceId());
         SmartDashboard.putNumber("FrontRightId", frontRight.getDeviceId());
@@ -50,8 +44,8 @@ public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstar
     }
 
     public void arcadeDrive(double left, double right) {
-        frontLeft.set(left * DriveConstants.maxSpeed);
-        frontRight.set(right * DriveConstants.maxSpeed);
+        frontLeft.set(left);
+        frontRight.set(right);
     }
 
     @Override

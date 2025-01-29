@@ -7,34 +7,32 @@ package frc.robot.Subsystem.Shooter;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.inputs.LoggableInputs;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class ShooterIONeo implements ShooterIO{
-    CANSparkMax Shooter;
-    CANSparkMax Feeder;
+    SparkMax Shooter;
+    SparkMax Feeder;
 
     LoggableInputs inputs;
     
     public ShooterIONeo() {
-        Shooter = new CANSparkMax(Constants.shooterID, MotorType.kBrushless);
-        Feeder = new CANSparkMax(Constants.feederID, MotorType.kBrushless);
+        Shooter = new SparkMax(Constants.shooterID, MotorType.kBrushless);
+        Feeder = new SparkMax(Constants.feederID, MotorType.kBrushless);
 
-        Shooter.restoreFactoryDefaults();
-        Feeder.restoreFactoryDefaults();
-        
-        Shooter.setIdleMode(IdleMode.kCoast);
-        Feeder.setIdleMode(IdleMode.kCoast);
-        
-        Shooter.setInverted(false);
-        Feeder.setInverted(false);
+        SparkMaxConfig config = new SparkMaxConfig();
 
-        Shooter.burnFlash();
-        Feeder.burnFlash();
+        config.idleMode(IdleMode.kCoast);
+        
+        Shooter.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        Feeder.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     }
 

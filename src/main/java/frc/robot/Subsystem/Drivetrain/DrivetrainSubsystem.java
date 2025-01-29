@@ -73,7 +73,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
       steer = MathUtil.applyDeadband(steer, 0.15);
       double left = drive - steer;
       double right = drive + steer;
-
+      left *= DriveConstants.maxSpeed;
+      right *= DriveConstants.maxSpeed;
       this.setVoltages(left, right);
     }, this);
   }

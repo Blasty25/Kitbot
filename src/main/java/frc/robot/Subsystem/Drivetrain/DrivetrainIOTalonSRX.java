@@ -39,10 +39,8 @@ public class DrivetrainIOTalonSRX implements DrivetrainIO {
 
     @Override
     public void setVolts(double left, double right) {
-        double drive = left * DriveConstants.maxSpeed;
-        double steer = right * DriveConstants.maxSpeed;
-        frontLeft.set(ControlMode.PercentOutput, drive / RobotController.getInputVoltage());
-        frontRight.set(ControlMode.PercentOutput, steer / RobotController.getInputVoltage());
+        frontLeft.set(ControlMode.PercentOutput, left / RobotController.getInputVoltage());
+        frontRight.set(ControlMode.PercentOutput, right / RobotController.getInputVoltage());
     }
 
     @Override

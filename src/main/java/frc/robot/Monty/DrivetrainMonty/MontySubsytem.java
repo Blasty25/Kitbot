@@ -1,4 +1,5 @@
 package frc.robot.Monty.DrivetrainMonty;
+//Hi guys hows it going?
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -22,7 +23,6 @@ import java.util.function.DoubleSupplier;
 import org.littletonrobotics.junction.Logger;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.util.ReplanningConfig;
 
 public class MontySubsytem extends SubsystemBase {
     DrivetrainIOstart io;
@@ -38,15 +38,15 @@ public class MontySubsytem extends SubsystemBase {
     public MontySubsytem(DrivetrainIOstart sim) {
         io = sim;
         // Auto for Monty(Config)
-        AutoBuilder.configureRamsete(
-                this::getPose,
-                this::setPose,
-                this::getSpeeds,
-                this::drive,
-                new ReplanningConfig(),
-                () -> (DriverStation.getAlliance().isPresent()
-                        && DriverStation.getAlliance().get().equals(Alliance.Blue)),
-                this);
+        // AutoBuilder.configureRamsete(
+        //         this::getPose,
+        //         this::setPose,
+        //         this::getSpeeds,
+        //         this::drive,
+        //         new ReplanningConfig(),
+        //         () -> (DriverStation.getAlliance().isPresent()
+        //                 && DriverStation.getAlliance().get().equals(Alliance.Blue)),
+        //         this);
     }
 
     public void arcadeDrive(double speed, double rotation) { // Real Implemntation
@@ -55,6 +55,8 @@ public class MontySubsytem extends SubsystemBase {
         double left = speed + rotation;
         double right = speed - rotation;
 
+        left *= DriveConstants.maxSpeed;
+        right *= DriveConstants.maxSpeed;
 
         io.arcadeDrive(left, right);
     }
@@ -92,7 +94,7 @@ public class MontySubsytem extends SubsystemBase {
 
     public void drive(ChassisSpeeds chassisSpeeds) { // PathPlanner(Autos)
         arcadeDrive(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.omegaRadiansPerSecond);
-    }
+    }   
 
     public Command ArcadeDrive(DoubleSupplier xSpeedDoubleSupplier, DoubleSupplier zRotationSupplier) {
         return new RunCommand(() -> {
@@ -101,3 +103,4 @@ public class MontySubsytem extends SubsystemBase {
     }
 
 }
+//Monty has a auto :kaboom:

@@ -1,6 +1,5 @@
 {
-  "version": 1.0,
-  "startingPose": null,
+  "version": "2025.0",
   "command": {
     "type": "sequential",
     "data": {
@@ -8,12 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "testing"
+            "pathName": "Drive Path"
           }
         }
       ]
     }
   },
+  "resetOdom": true,
   "folder": null,
   "choreoAuto": false
 }

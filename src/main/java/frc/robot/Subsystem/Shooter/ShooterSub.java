@@ -30,10 +30,6 @@ public class ShooterSub extends SubsystemBase {
     io.setFeederVolts(volts * Constants.maxFeederSpeed);
   }
 
-  public void getFeederVolts(double volts){
-  }
-
-
   public void setShooterOutput(double volts) {
     io.setShooterVolts(volts * Constants.maxShooterSpeed);
   }

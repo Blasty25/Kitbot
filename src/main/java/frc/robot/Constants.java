@@ -27,7 +27,7 @@ public class Constants {
         public static final double m_RobotWidth = Units.inchesToMeters(15);
 
         // Other Monty Constants
-        public static final double maxSpeed = 0.45;
+        public static final double maxSpeed = 0.4;
 
         public static final double driveSpeed = maxSpeed * (Units.radiansPerSecondToRotationsPerMinute(2 * Math.PI));
 
@@ -46,10 +46,10 @@ public class Constants {
 
         public static final int FeedRollerID = 23;
 
-        public static final double maxIntakeSpeed = 1;
-        public static final double maxLaunchSpeed = 1;
+        public static final double maxIntakeSpeed = 0.5;
+        public static final double maxLaunchSpeed = 0.6;
 
-        public static final double maxFeedSpeed = 1;
+        public static final double maxFeedSpeed = 0.5;
 
         public static final int intakeSolenoid = 15;
         public static final int feedersolenoid = 7;
@@ -74,7 +74,7 @@ public class Constants {
         Kitbot;
     }
 
-    public static final RobotType type = RobotType.Monty; 
+    public static final RobotType type = RobotType.Kitbot; 
 
 } 
 //Me just adding fun comments all around the my code! go to Monty Subsystem to read more

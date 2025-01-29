@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.RobotType;
 import frc.robot.Monty.DrivetrainMonty.DrivetrainIOMonty;
-import frc.robot.Monty.DrivetrainMonty.MontyIOSim;
 import frc.robot.Monty.DrivetrainMonty.MontySubsytem;
 import frc.robot.Monty.Hood_Command.HoodState;
 import frc.robot.Monty.Intake.Intake;
@@ -37,7 +36,7 @@ public class RobotContainer {
     CommandXboxController controller = new CommandXboxController(0);
     DrivetrainSubsystem drivetrainSubsystem;
     MontySubsytem montySubsytem;
-    MontyIOSim montyIOSim;
+    // MontyIOSim montyIOSim;
     ShooterSub shooterSub;
     Intake m_intake;
     m_ShooterSub m_ShooterSub;
@@ -45,7 +44,7 @@ public class RobotContainer {
     public RobotContainer(boolean isReal) {
         if (isReal) {
             if (Constants.type == RobotType.Kitbot) {
-                shooterSub = new ShooterSub(new ShooterIONeo());
+                // shooterSub = new ShooterSub(new ShooterIONeo());
                 drivetrainSubsystem = new DrivetrainSubsystem(new DrivetrainIOTalonSRX());
             }
 
@@ -53,7 +52,7 @@ public class RobotContainer {
                 montySubsytem = new MontySubsytem(new DrivetrainIOMonty());
                 m_intake = new Intake(hub);
                 m_ShooterSub = new m_ShooterSub(hub);
-                montyIOSim = new MontyIOSim();
+                // montyIOSim = new MontyIOSim();
             }
         } else {
             if (Constants.type == RobotType.Kitbot) {
@@ -62,9 +61,9 @@ public class RobotContainer {
             }
 
             if (Constants.type == RobotType.Monty) {
-                montySubsytem = new MontySubsytem(new MontyIOSim());
+                // montySubsytem = new MontySubsytem(new MontyIOSim());
                 m_ShooterSub = new m_ShooterSub(hub);
-                montyIOSim = new MontyIOSim();
+                // montyIOSim = new MontyIOSim();
             }
         }
 
@@ -79,10 +78,10 @@ public class RobotContainer {
                         drivetrainSubsystem.voltagesArcadeCommand(
                                 () -> -controller.getLeftY(),
                                 () -> -controller.getRightX()));  //For real Implemntation make sure to negate this
-                controller.a().whileTrue(new RunFeeder(shooterSub, 12)); // A to run feeder motors
-                controller.rightTrigger(0.5).whileTrue(new RunShooter(shooterSub, 12)); // Left
-                controller.b().whileTrue(new RunFeeder(shooterSub, -12));
-                controller.b().whileTrue(new RunShooter(shooterSub, -12)); // When on B runs shooter and feeder motor backwards(Intake motor)
+                // controller.a().whileTrue(new RunFeeder(shooterSub, 12)); // A to run feeder motors
+                // controller.rightTrigger(0.5).whileTrue(new RunShooter(shooterSub, 12)); // Left
+                // controller.b().whileTrue(new RunFeeder(shooterSub, -12));
+                // controller.b().whileTrue(new RunShooter(shooterSub, -12)); // When on B runs shooter and feeder motor backwards(Intake motor)
                 break;
 
             case Monty:
