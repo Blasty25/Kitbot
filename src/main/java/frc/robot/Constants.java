@@ -74,7 +74,7 @@ public class Constants {
         Kitbot;
     }
 
-    public static final RobotType type = RobotType.Kitbot; 
+    public static final RobotType type = RobotType.Monty; 
 
 } 
 //Me just adding fun comments all around the my code! go to Monty Subsystem to read more

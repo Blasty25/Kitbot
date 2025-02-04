@@ -21,21 +21,27 @@ public class DrivetrainIOMonty extends SubsystemBase implements DrivetrainIOstar
 
     public DrivetrainIOMonty() {
         SparkMaxConfig config = new SparkMaxConfig();
+        SparkMaxConfig leftConfig = new SparkMaxConfig();
 
-        config.idleMode(IdleMode.kBrake);
+        config.idleMode(IdleMode.kCoast);
         config.smartCurrentLimit(50);
-        config.inverted(true);
+        config.inverted(false);
 
-        frontLeft.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        leftConfig.inverted(true);
+        leftConfig.idleMode(IdleMode.kCoast);
+        leftConfig.smartCurrentLimit(50);
+
+
+
+
+        frontLeft.configure(leftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        backLeft.configure(leftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
         frontRight.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-        config.follow(frontLeft, true);
-
-        backLeft.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-        config.follow(frontRight, true);
-
         backRight.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        leftConfig.follow(frontLeft);
+        config.follow(frontRight);
 
         SmartDashboard.putNumber("FrontLeftId", frontLeft.getDeviceId());
         SmartDashboard.putNumber("FrontRightId", frontRight.getDeviceId());

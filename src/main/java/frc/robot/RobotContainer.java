@@ -87,8 +87,8 @@ public class RobotContainer {
             case Monty:
                 montySubsytem.setDefaultCommand(
                         montySubsytem.ArcadeDrive(
-                                () -> -controller.getLeftY(),
-                                () -> controller.getRightX()));  //For real implemntation make sure to invert this
+                                () -> -controller.getRightX(),
+                                () -> controller.getLeftY()));  //For real implemntation make sure to invert this
                 controller.x().whileTrue(new RunIntake(m_intake, 1)); // Run intake motors
                 controller.b().toggleOnTrue(new SetIntakeState(m_intake, true)); // Move the intake down
                 controller.rightTrigger(0.5).whileTrue(new RunFeed(m_ShooterSub, 1)); // shoot the ball after

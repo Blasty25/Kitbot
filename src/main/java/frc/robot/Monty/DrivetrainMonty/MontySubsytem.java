@@ -50,8 +50,8 @@ public class MontySubsytem extends SubsystemBase {
     }
 
     public void arcadeDrive(double speed, double rotation) { // Real Implemntation
-        speed = MathUtil.applyDeadband(speed, 0.15);
-        rotation = MathUtil.applyDeadband(rotation, 0.15);
+        speed = MathUtil.applyDeadband(speed, 0.2);
+        rotation = MathUtil.applyDeadband(rotation, 0.2);
         double left = speed + rotation;
         double right = speed - rotation;
 
